@@ -11,7 +11,8 @@ import openpyxl
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.DARKLY]) # dbc.themes.DARKLY is an imported theme for the Dash
 
-# Importing excel
+#------- DATA FOR SOCIOECONOMIC VARIABLE -------#
+# Importing from direct link
 raw_data = requests.get("https://uchicago.box.com/shared/static/mxv5z4eommsiaydm9rru69gj5avygxto.xlsx").content
 # Reading file to pandas
 cleanedData = pd.read_excel(raw_data, sheet_name = "Community areas", dtype={'Layer': str, 'Name': str, 'GEOID': int, 
@@ -22,16 +23,26 @@ cleanedData['HCSNS_2016-2018'] = cleanedData['HCSNS_2016-2018'].str.replace(',',
 # Parsing HCSNS_2016-2018 to numeric
 cleanedData['HCSNS_2016-2018'] = pd.to_numeric(cleanedData['HCSNS_2016-2018'], downcast='float')
 
+#------- GEOJSON TO DISPLAY SOCIOECONOMIC VARIABLE -------#
+# Importing the city of chicago geojson community level map
+with urllib.request.urlopen("https://uchicago.box.com/shared/static/0hyrwzbja479o01f0ke99b418zvsudjr.geojson") as url:
+        chicagoMap = json.load(url)
+
+#------- DATA TO DISPLAY PUBLIC SERVICES/PROVISIONS -------#
+# Importing from direct link
+raw_data2 = requests.get("https://uchicago.box.com/shared/static/uhmit09c6imq79gxwmfpkooxcph8j4t7.xlsx").content
+# Reading file to pandas
+cleanedData2 = pd.read_excel(raw_data2, sheet_name = "Police_Stations_-_Map", 
+                            dtype={'DISTRICT': str, 'ADDRESS': str, 'ZIP': str, 
+                                    'latitude': float, 'longitud': float})
+
 # Setting general colors
 colors = { 
     'bg': 'rgba(0,0,0,0)',
     'font': '#FFFFFF'
 }
 
-# Importing the city of chicago geojson community level map
-with urllib.request.urlopen("https://uchicago.box.com/shared/static/0hyrwzbja479o01f0ke99b418zvsudjr.geojson") as url:
-        chicagoMap = json.load(url)
-
+#------- CHOROPLETH MAP TO DISPLAY SOCIOECONOMIC VARIABLE -------#
 fig = px.choropleth(
         cleanedData, # Socioeconomic data
         geojson = chicagoMap, # Community Level Geojson
@@ -39,7 +50,7 @@ fig = px.choropleth(
         color_continuous_scale = 'PuBu', # Choosing color
         locations = 'Community Area', # Identifies locations from geojson
         featureidkey = "properties.pri_neigh", # Consider pri_neigh as key from geojson dictionary
-        labels={'HCSNS_2016-2018': 'Number of people whom reported to feel safe'} # Labelling socioeconomic variable
+        labels={'HCSNS_2016-2018': 'Number of people whom reported to feel safe'}, # Labelling socioeconomic variable
         )
 fig.update_geos(fitbounds = "locations", visible = False) # Maps shapefile boundary locations from geojson
 fig.update_layout(
@@ -49,7 +60,19 @@ fig.update_layout(
     margin = {"r":20,"t":20,"l":20,"b":20} # Sets boundaries of map
     ) 
 
-# Structure of Dashboard
+#------- SCATTER MAP FOR PUBLIC SERVICES/PROVISIONS -------#
+fig2 = px.scatter_mapbox(cleanedData2, lat="latitude", lon="longitud", 
+                        hover_data=["DISTRICT", "ADDRESS", "ZIP"],
+                        color_discrete_sequence=["fuchsia"], zoom = 10)
+fig2.update_layout(
+    paper_bgcolor = colors['bg'], # Sets transparent background
+    plot_bgcolor = colors['bg'], # Sets transparent background
+    font_color = colors['font'], # Sets font 
+    mapbox_style = 'white-bg', # Default map is 'basic'
+    margin = {"r":20,"t":20,"l":20,"b":20}
+    )
+
+#------- DASHBOARD STRUCTURE -------#
 app.layout = html.Div(children = [
     html.H1('Pro-Vision', style = {'textAlign': 'center'}), # Main header
     html.H4('''
@@ -60,9 +83,13 @@ app.layout = html.Div(children = [
     dcc.Graph( 
         id = 'map',
         figure = fig
-    ) # Displaying map
+    ), # Displaying choropleth map
+    dcc.Graph( 
+        id = 'map-2',
+        figure = fig2
+    ) # Displaying scatter map
 ])
 
 # Runs app from terminal with "python3 app.py". Once you run the map, you can exit with 'ctrl + c'
 if __name__ == '__main__':
-    app.run_server(host='127.0.0.1', port='8090', debug = False) # If there is a port error you can change it to '8080'
+    app.run_server(host='127.0.0.1', port='8080', debug = False) # If there is a port error you can change it to '8080'
