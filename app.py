@@ -8,6 +8,7 @@ import pandas as pd
 import numpy as np
 import requests
 import openpyxl
+from plotly.subplots import make_subplots
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.DARKLY]) # dbc.themes.DARKLY is an imported theme for the Dash
 
@@ -43,33 +44,29 @@ colors = {
 }
 
 #------- CHOROPLETH MAP TO DISPLAY SOCIOECONOMIC VARIABLE -------#
-fig = px.choropleth(
+trace1 = px.choropleth(
         cleanedData, # Socioeconomic data
         geojson = chicagoMap, # Community Level Geojson
         color = 'HCSNS_2016-2018', # Setting color intensity by the values of HCSNS_2016-2018 (i.e., safety variable)
         color_continuous_scale = 'PuBu', # Choosing color
         locations = 'Community Area', # Identifies locations from geojson
         featureidkey = "properties.pri_neigh", # Consider pri_neigh as key from geojson dictionary
-        labels={'HCSNS_2016-2018': 'Number of people whom reported to feel safe'}, # Labelling socioeconomic variable
+        labels = {'HCSNS_2016-2018': 'Number of people whom reported to feel safe'}, # Labelling socioeconomic variable
         )
-fig.update_geos(fitbounds = "locations", visible = False) # Maps shapefile boundary locations from geojson
-fig.update_layout(
+trace1.update_geos(fitbounds = "locations", visible = False) # Maps shapefile boundary locations from geojson
+
+#------- SCATTER MAP FOR PUBLIC SERVICES/PROVISIONS -------#
+fig = px.scatter_geo(cleanedData2, lat="latitude", lon="longitud", 
+                        hover_data=["DISTRICT", "ADDRESS", "ZIP"],
+                        color_discrete_sequence=["fuchsia"])
+
+fig.add_trace(trace1.data[0])
+trace1.layout.update(showlegend=True)
+fig.layout.update(
     paper_bgcolor = colors['bg'], # Sets transparent background
     plot_bgcolor = colors['bg'], # Sets transparent background
     font_color = colors['font'], # Sets font color
     margin = {"r":20,"t":20,"l":20,"b":20} # Sets boundaries of map
-    ) 
-
-#------- SCATTER MAP FOR PUBLIC SERVICES/PROVISIONS -------#
-fig2 = px.scatter_mapbox(cleanedData2, lat="latitude", lon="longitud", 
-                        hover_data=["DISTRICT", "ADDRESS", "ZIP"],
-                        color_discrete_sequence=["fuchsia"], zoom = 10)
-fig2.update_layout(
-    paper_bgcolor = colors['bg'], # Sets transparent background
-    plot_bgcolor = colors['bg'], # Sets transparent background
-    font_color = colors['font'], # Sets font 
-    mapbox_style = 'white-bg', # Default map is 'basic'
-    margin = {"r":20,"t":20,"l":20,"b":20}
     )
 
 #------- DASHBOARD STRUCTURE -------#
@@ -83,11 +80,7 @@ app.layout = html.Div(children = [
     dcc.Graph( 
         id = 'map',
         figure = fig
-    ), # Displaying choropleth map
-    dcc.Graph( 
-        id = 'map-2',
-        figure = fig2
-    ) # Displaying scatter map
+    ) # Displaying choropleth map
 ])
 
 # Runs app from terminal with "python3 app.py". Once you run the map, you can exit with 'ctrl + c'
