@@ -14,13 +14,19 @@ address_directory = {
                          '4312 West North Avenue, Chicago, IL 60639'
                          ]
 }
-def geocode(directory):
-    coord_directory = {}
-    for prov,locations in directory.items():
-        coord_directory[prov]=[]
-        for location in locations:
-            geocode_result = gmaps.geocode(location)
-            lat = geocode_result[0]['geometry']['location']['lat']
-            long = geocode_result[0]['geometry']['location']['lng']
-            coord_directory[prov].append((location,lat,long))
-    return coord_directory
+# def geocode(directory):
+#     coord_directory = {}
+#     for prov,locations in directory.items():
+#         coord_directory[prov]=[]
+#         for location in locations:
+#             geocode_result = gmaps.geocode(location)
+#             lat = geocode_result[0]['geometry']['location']['lat']
+#             long = geocode_result[0]['geometry']['location']['lng']
+#             coord_directory[prov].append((location,lat,long))
+#     return coord_directory
+
+def geocode(address):
+    geocode_result = gmaps.geocode(location)
+    lat = geocode_result[0]['geometry']['location']['lat']
+    long = geocode_result[0]['geometry']['location']['lng']
+    return (lat,long)
