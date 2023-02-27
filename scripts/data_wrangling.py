@@ -115,8 +115,8 @@ def clean_sei_cen():
         var_name="bins",
         value_name="bin_value",
     )
-
-    binned_data.to_csv("data/binned_data_V1.csv")
+    binned_data = binned_data.drop(["bins"], axis=1)
+    binned_data.to_csv("data/binned_data_V2.csv")
     # df_melt["bin"] = 0
     # for var in indicator_vars:
     #     filtered_df = df_melt[df_melt["indicator"] == var]
