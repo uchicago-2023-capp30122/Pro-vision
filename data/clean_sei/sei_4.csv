@@ -1,0 +1,463 @@
+,community_area,GEOID,value,type
+1,Rogers Park,1.0,5.09051873807082,unemployment rate in community areas
+2,Norwood Park,10.0,4.46145864075147,unemployment rate in community areas
+3,Jefferson Park,11.0,5.73052840828009,unemployment rate in community areas
+4,Forest Glen,12.0,4.39151500768578,unemployment rate in community areas
+5,North Park,13.0,3.57956283403335,unemployment rate in community areas
+6,Albany Park,14.0,6.6660517385112,unemployment rate in community areas
+7,Portage Park,15.0,5.61781630141782,unemployment rate in community areas
+8,Irving Park,16.0,6.44524550127912,unemployment rate in community areas
+9,Dunning,17.0,4.89400825511832,unemployment rate in community areas
+10,Montclare,18.0,5.36229404666811,unemployment rate in community areas
+11,Belmont Cragin,19.0,5.36610753620452,unemployment rate in community areas
+12,West Ridge,2.0,6.66286994248274,unemployment rate in community areas
+13,Hermosa,20.0,4.78152963372372,unemployment rate in community areas
+14,Avondale,21.0,5.01250923021485,unemployment rate in community areas
+15,Logan Square,22.0,3.78858402046115,unemployment rate in community areas
+16,Humboldt Park,23.0,10.9355354765512,unemployment rate in community areas
+17,West Town,24.0,3.49830922227855,unemployment rate in community areas
+18,Austin,25.0,13.7568115272227,unemployment rate in community areas
+19,West Garfield Park,26.0,22.697513649178,unemployment rate in community areas
+20,East Garfield Park,27.0,20.2887735825669,unemployment rate in community areas
+21,Near West Side,28.0,7.07704746995199,unemployment rate in community areas
+22,North Lawndale,29.0,17.8995419379258,unemployment rate in community areas
+23,Uptown,3.0,4.30789333291623,unemployment rate in community areas
+24,South Lawndale,30.0,10.4844858908713,unemployment rate in community areas
+25,Lower West Side,31.0,6.34333277150737,unemployment rate in community areas
+26,Loop,32.0,6.29411226675247,unemployment rate in community areas
+27,Near South Side,33.0,2.0390077110256,unemployment rate in community areas
+28,Armour Square,34.0,7.95256594079494,unemployment rate in community areas
+29,Douglas,35.0,16.3414062717478,unemployment rate in community areas
+30,Oakland,36.0,25.6771060386471,unemployment rate in community areas
+31,Fuller Park,37.0,32.5187393179432,unemployment rate in community areas
+32,Grand Boulevard,38.0,14.707791360845,unemployment rate in community areas
+33,Kenwood,39.0,12.1722392765048,unemployment rate in community areas
+34,Lincoln Square,4.0,5.8655543256256,unemployment rate in community areas
+35,Washington Park,40.0,20.8443199249466,unemployment rate in community areas
+36,Hyde Park,41.0,7.90557276445455,unemployment rate in community areas
+37,Woodlawn,42.0,18.5140606090522,unemployment rate in community areas
+38,South Shore,43.0,16.9699076272087,unemployment rate in community areas
+39,Chatham,44.0,14.3251640227359,unemployment rate in community areas
+40,Avalon Park,45.0,13.4687030080198,unemployment rate in community areas
+41,South Chicago,46.0,16.9582924858769,unemployment rate in community areas
+42,Burnside,47.0,21.4545049750991,unemployment rate in community areas
+43,Calumet Heights,48.0,9.13981030256416,unemployment rate in community areas
+44,Roseland,49.0,18.7057973018428,unemployment rate in community areas
+45,North Center,5.0,3.65863010946593,unemployment rate in community areas
+46,Pullman,50.0,15.3831168054232,unemployment rate in community areas
+47,South Deering,51.0,13.5134220738204,unemployment rate in community areas
+48,East Side,52.0,8.01710182714881,unemployment rate in community areas
+49,West Pullman,53.0,19.4019968277389,unemployment rate in community areas
+50,Riverdale,54.0,26.2904610024443,unemployment rate in community areas
+51,Hegewisch,55.0,11.3136859135071,unemployment rate in community areas
+52,Garfield Ridge,56.0,7.52493402806952,unemployment rate in community areas
+53,Archer Heights,57.0,11.4034498870654,unemployment rate in community areas
+54,Brighton Park,58.0,9.62738692092789,unemployment rate in community areas
+55,McKinley Park,59.0,7.4910573237985,unemployment rate in community areas
+56,Lake View,6.0,3.86199215947888,unemployment rate in community areas
+57,Bridgeport,60.0,6.44017714309606,unemployment rate in community areas
+58,New City,61.0,15.3776168428787,unemployment rate in community areas
+59,West Elsdon,62.0,10.2833078597164,unemployment rate in community areas
+60,Gage Park,63.0,16.2090417944579,unemployment rate in community areas
+61,Clearing,64.0,8.4795689008772,unemployment rate in community areas
+62,West Lawn,65.0,10.3934167046639,unemployment rate in community areas
+63,Chicago Lawn,66.0,18.1550417329556,unemployment rate in community areas
+64,West Englewood,67.0,23.3192467750907,unemployment rate in community areas
+65,Englewood,68.0,24.7101472613534,unemployment rate in community areas
+66,Greater Grand Crossing,69.0,19.299752633195,unemployment rate in community areas
+67,Lincoln Park,7.0,3.48957308336201,unemployment rate in community areas
+68,Ashburn,70.0,11.8771011596487,unemployment rate in community areas
+69,Auburn Gresham,71.0,19.5629755140447,unemployment rate in community areas
+70,Beverly,72.0,7.77899396170236,unemployment rate in community areas
+71,Washington Heights,73.0,14.7765549596247,unemployment rate in community areas
+72,Mount Greenwood,74.0,5.48333114936451,unemployment rate in community areas
+73,Morgan Park,75.0,10.6542484143931,unemployment rate in community areas
+74,O'Hare,76.0,4.76793224315009,unemployment rate in community areas
+75,Edgewater,77.0,6.33674241093357,unemployment rate in community areas
+76,Near North Side,8.0,2.74799953357242,unemployment rate in community areas
+77,Edison Park,9.0,2.22985655134813,unemployment rate in community areas
+1,Rogers Park,1.0,51702.5810899229,median household income in community areas
+2,Norwood Park,10.0,96762.5561463996,median household income in community areas
+3,Jefferson Park,11.0,84746.4909132275,median household income in community areas
+4,Forest Glen,12.0,132773.52699036,median household income in community areas
+5,North Park,13.0,63709.5129591303,median household income in community areas
+6,Albany Park,14.0,71978.4125286356,median household income in community areas
+7,Portage Park,15.0,78898.5159803236,median household income in community areas
+8,Irving Park,16.0,79728.390433669,median household income in community areas
+9,Dunning,17.0,78217.9574325523,median household income in community areas
+10,Montclare,18.0,55998.1597388659,median household income in community areas
+11,Belmont Cragin,19.0,60868.8207115341,median household income in community areas
+12,West Ridge,2.0,61465.8298985407,median household income in community areas
+13,Hermosa,20.0,60492.9371004903,median household income in community areas
+14,Avondale,21.0,79994.6885730412,median household income in community areas
+15,Logan Square,22.0,95764.4840730865,median household income in community areas
+16,Humboldt Park,23.0,47907.0540669805,median household income in community areas
+17,West Town,24.0,121221.637052242,median household income in community areas
+18,Austin,25.0,43790.2613878405,median household income in community areas
+19,West Garfield Park,26.0,33929.862468668,median household income in community areas
+20,East Garfield Park,27.0,27872.2961010423,median household income in community areas
+21,Near West Side,28.0,98452.8203150894,median household income in community areas
+22,North Lawndale,29.0,33915.1022644167,median household income in community areas
+23,Uptown,3.0,64213.3023210496,median household income in community areas
+24,South Lawndale,30.0,40359.4495442491,median household income in community areas
+25,Lower West Side,31.0,62962.5347009566,median household income in community areas
+26,Loop,32.0,119545.18740625,median household income in community areas
+27,Near South Side,33.0,111759.578776138,median household income in community areas
+28,Armour Square,34.0,37851.9728927742,median household income in community areas
+29,Douglas,35.0,48925.83547291,median household income in community areas
+30,Oakland,36.0,30749.1184334665,median household income in community areas
+31,Fuller Park,37.0,18315.6397394826,median household income in community areas
+32,Grand Boulevard,38.0,43836.9014743217,median household income in community areas
+33,Kenwood,39.0,51555.7777355816,median household income in community areas
+34,Lincoln Square,4.0,84401.2262570264,median household income in community areas
+35,Washington Park,40.0,25189.9437891151,median household income in community areas
+36,Hyde Park,41.0,71216.3632561484,median household income in community areas
+37,Woodlawn,42.0,33516.9471059749,median household income in community areas
+38,South Shore,43.0,36608.3289172712,median household income in community areas
+39,Chatham,44.0,41453.6479304282,median household income in community areas
+40,Avalon Park,45.0,53070.0857075135,median household income in community areas
+41,South Chicago,46.0,41043.4395431671,median household income in community areas
+42,Burnside,47.0,45296.009293376,median household income in community areas
+43,Calumet Heights,48.0,68117.7035851219,median household income in community areas
+44,Roseland,49.0,46307.2722468859,median household income in community areas
+45,North Center,5.0,142241.306042457,median household income in community areas
+46,Pullman,50.0,55081.1958279608,median household income in community areas
+47,South Deering,51.0,37015.6003917535,median household income in community areas
+48,East Side,52.0,57742.887796712,median household income in community areas
+49,West Pullman,53.0,48287.4471081467,median household income in community areas
+50,Riverdale,54.0,19527.8390088707,median household income in community areas
+51,Hegewisch,55.0,59340.6811482714,median household income in community areas
+52,Garfield Ridge,56.0,84303.172255932,median household income in community areas
+53,Archer Heights,57.0,51678.2941499196,median household income in community areas
+54,Brighton Park,58.0,47131.9315939676,median household income in community areas
+55,McKinley Park,59.0,65000.0583065096,median household income in community areas
+56,Lake View,6.0,110224.025811493,median household income in community areas
+57,Bridgeport,60.0,69872.1234969528,median household income in community areas
+58,New City,61.0,40159.6381936672,median household income in community areas
+59,West Elsdon,62.0,56894.3912851826,median household income in community areas
+60,Gage Park,63.0,45000.1554742539,median household income in community areas
+61,Clearing,64.0,63894.8315166439,median household income in community areas
+62,West Lawn,65.0,64686.081105261,median household income in community areas
+63,Chicago Lawn,66.0,40214.2097606439,median household income in community areas
+64,West Englewood,67.0,28979.1695504818,median household income in community areas
+65,Englewood,68.0,25670.6608390665,median household income in community areas
+66,Greater Grand Crossing,69.0,34700.9368462343,median household income in community areas
+67,Lincoln Park,7.0,151341.878210618,median household income in community areas
+68,Ashburn,70.0,72500.7761645324,median household income in community areas
+69,Auburn Gresham,71.0,39607.9783737991,median household income in community areas
+70,Beverly,72.0,113753.421143429,median household income in community areas
+71,Washington Heights,73.0,57781.7432082216,median household income in community areas
+72,Mount Greenwood,74.0,108192.508505031,median household income in community areas
+73,Morgan Park,75.0,67532.816547815,median household income in community areas
+74,O'Hare,76.0,61918.2206085312,median household income in community areas
+75,Edgewater,77.0,70026.7511845599,median household income in community areas
+76,Near North Side,8.0,117731.25188738,median household income in community areas
+77,Edison Park,9.0,113380.718359436,median household income in community areas
+1,Rogers Park,1.0,14.2842078135534,uninsured rate in community areas
+2,Norwood Park,10.0,4.07603859309759,uninsured rate in community areas
+3,Jefferson Park,11.0,7.80114311355419,uninsured rate in community areas
+4,Forest Glen,12.0,6.84613137370861,uninsured rate in community areas
+5,North Park,13.0,9.69852639315237,uninsured rate in community areas
+6,Albany Park,14.0,17.1584564016772,uninsured rate in community areas
+7,Portage Park,15.0,13.1230296970216,uninsured rate in community areas
+8,Irving Park,16.0,10.5921487297554,uninsured rate in community areas
+9,Dunning,17.0,10.3224678406261,uninsured rate in community areas
+10,Montclare,18.0,8.98201045907206,uninsured rate in community areas
+11,Belmont Cragin,19.0,17.2833989906795,uninsured rate in community areas
+12,West Ridge,2.0,14.477864435223,uninsured rate in community areas
+13,Hermosa,20.0,17.6343493519426,uninsured rate in community areas
+14,Avondale,21.0,14.7908735734434,uninsured rate in community areas
+15,Logan Square,22.0,7.45166005840926,uninsured rate in community areas
+16,Humboldt Park,23.0,14.8906248356451,uninsured rate in community areas
+17,West Town,24.0,5.07663888734508,uninsured rate in community areas
+18,Austin,25.0,10.9156340651195,uninsured rate in community areas
+19,West Garfield Park,26.0,8.9817178395417,uninsured rate in community areas
+20,East Garfield Park,27.0,9.74564420359085,uninsured rate in community areas
+21,Near West Side,28.0,4.03820071496393,uninsured rate in community areas
+22,North Lawndale,29.0,11.6182821372489,uninsured rate in community areas
+23,Uptown,3.0,9.6208057440129,uninsured rate in community areas
+24,South Lawndale,30.0,20.2645330169711,uninsured rate in community areas
+25,Lower West Side,31.0,13.1200757019615,uninsured rate in community areas
+26,Loop,32.0,2.83014402706213,uninsured rate in community areas
+27,Near South Side,33.0,3.73364990623153,uninsured rate in community areas
+28,Armour Square,34.0,8.84097804699684,uninsured rate in community areas
+29,Douglas,35.0,7.98459947874697,uninsured rate in community areas
+30,Oakland,36.0,8.99140140162144,uninsured rate in community areas
+31,Fuller Park,37.0,3.4907780927195,uninsured rate in community areas
+32,Grand Boulevard,38.0,6.75537953269251,uninsured rate in community areas
+33,Kenwood,39.0,7.40070935856363,uninsured rate in community areas
+34,Lincoln Square,4.0,9.10465654494593,uninsured rate in community areas
+35,Washington Park,40.0,9.06751695771903,uninsured rate in community areas
+36,Hyde Park,41.0,5.20256909301051,uninsured rate in community areas
+37,Woodlawn,42.0,9.34549814457908,uninsured rate in community areas
+38,South Shore,43.0,7.66967932983196,uninsured rate in community areas
+39,Chatham,44.0,10.3336890327565,uninsured rate in community areas
+40,Avalon Park,45.0,8.96002392262081,uninsured rate in community areas
+41,South Chicago,46.0,9.71512803427964,uninsured rate in community areas
+42,Burnside,47.0,18.1135001181013,uninsured rate in community areas
+43,Calumet Heights,48.0,5.88556314965423,uninsured rate in community areas
+44,Roseland,49.0,9.70640753169591,uninsured rate in community areas
+45,North Center,5.0,2.55506304444803,uninsured rate in community areas
+46,Pullman,50.0,5.10066884435208,uninsured rate in community areas
+47,South Deering,51.0,8.47031239467515,uninsured rate in community areas
+48,East Side,52.0,12.4870156144982,uninsured rate in community areas
+49,West Pullman,53.0,10.6035901479985,uninsured rate in community areas
+50,Riverdale,54.0,8.76212823721274,uninsured rate in community areas
+51,Hegewisch,55.0,9.21254167377822,uninsured rate in community areas
+52,Garfield Ridge,56.0,8.33521335114391,uninsured rate in community areas
+53,Archer Heights,57.0,11.770308474034,uninsured rate in community areas
+54,Brighton Park,58.0,16.507163042725,uninsured rate in community areas
+55,McKinley Park,59.0,11.631899711096,uninsured rate in community areas
+56,Lake View,6.0,3.78538334185177,uninsured rate in community areas
+57,Bridgeport,60.0,8.7502336710565,uninsured rate in community areas
+58,New City,61.0,19.6012839645287,uninsured rate in community areas
+59,West Elsdon,62.0,8.85637269882339,uninsured rate in community areas
+60,Gage Park,63.0,15.8046946878208,uninsured rate in community areas
+61,Clearing,64.0,7.51256560424904,uninsured rate in community areas
+62,West Lawn,65.0,11.7877981544652,uninsured rate in community areas
+63,Chicago Lawn,66.0,15.9367969355919,uninsured rate in community areas
+64,West Englewood,67.0,11.5054717012617,uninsured rate in community areas
+65,Englewood,68.0,12.146408246646,uninsured rate in community areas
+66,Greater Grand Crossing,69.0,8.47487362537238,uninsured rate in community areas
+67,Lincoln Park,7.0,2.42976948221051,uninsured rate in community areas
+68,Ashburn,70.0,11.016904789379,uninsured rate in community areas
+69,Auburn Gresham,71.0,7.97883286385306,uninsured rate in community areas
+70,Beverly,72.0,2.62652322532811,uninsured rate in community areas
+71,Washington Heights,73.0,8.32254070868678,uninsured rate in community areas
+72,Mount Greenwood,74.0,2.70961821844431,uninsured rate in community areas
+73,Morgan Park,75.0,6.49914578486474,uninsured rate in community areas
+74,O'Hare,76.0,16.851130863737,uninsured rate in community areas
+75,Edgewater,77.0,8.61961054492148,uninsured rate in community areas
+76,Near North Side,8.0,2.23059645775952,uninsured rate in community areas
+77,Edison Park,9.0,1.50996251102968,uninsured rate in community areas
+1,Rogers Park,1.0,80.5814876275583,social vulnerability index in community areas
+2,Norwood Park,10.0,40.1804082929201,social vulnerability index in community areas
+3,Jefferson Park,11.0,43.8696136862043,social vulnerability index in community areas
+4,Forest Glen,12.0,23.7899706276728,social vulnerability index in community areas
+5,North Park,13.0,73.4950099032314,social vulnerability index in community areas
+6,Albany Park,14.0,75.0709693442758,social vulnerability index in community areas
+7,Portage Park,15.0,61.4807880409758,social vulnerability index in community areas
+8,Irving Park,16.0,60.2956294457282,social vulnerability index in community areas
+9,Dunning,17.0,43.2551414303603,social vulnerability index in community areas
+10,Montclare,18.0,83.2406489489006,social vulnerability index in community areas
+11,Belmont Cragin,19.0,80.1294129467404,social vulnerability index in community areas
+12,West Ridge,2.0,82.3187903429451,social vulnerability index in community areas
+13,Hermosa,20.0,79.9718239784984,social vulnerability index in community areas
+14,Avondale,21.0,62.3392807380017,social vulnerability index in community areas
+15,Logan Square,22.0,40.9227084316682,social vulnerability index in community areas
+16,Humboldt Park,23.0,88.1966572089766,social vulnerability index in community areas
+17,West Town,24.0,24.9582534878115,social vulnerability index in community areas
+18,Austin,25.0,87.0268629183722,social vulnerability index in community areas
+19,West Garfield Park,26.0,86.6689022435081,social vulnerability index in community areas
+20,East Garfield Park,27.0,86.9647406356756,social vulnerability index in community areas
+21,Near West Side,28.0,46.1505363256788,social vulnerability index in community areas
+22,North Lawndale,29.0,85.043081245849,social vulnerability index in community areas
+23,Uptown,3.0,67.2023098010764,social vulnerability index in community areas
+24,South Lawndale,30.0,85.7586004727101,social vulnerability index in community areas
+25,Lower West Side,31.0,71.2349750406169,social vulnerability index in community areas
+26,Loop,32.0,43.9012271382697,social vulnerability index in community areas
+27,Near South Side,33.0,27.0907040805084,social vulnerability index in community areas
+28,Armour Square,34.0,87.8047195261759,social vulnerability index in community areas
+29,Douglas,35.0,73.9987844939911,social vulnerability index in community areas
+30,Oakland,36.0,77.4102058362526,social vulnerability index in community areas
+31,Fuller Park,37.0,88.5576676509139,social vulnerability index in community areas
+32,Grand Boulevard,38.0,72.7218981239323,social vulnerability index in community areas
+33,Kenwood,39.0,69.3654530496374,social vulnerability index in community areas
+34,Lincoln Square,4.0,40.7759817353015,social vulnerability index in community areas
+35,Washington Park,40.0,87.8207643409896,social vulnerability index in community areas
+36,Hyde Park,41.0,51.8774869305338,social vulnerability index in community areas
+37,Woodlawn,42.0,81.9363927614556,social vulnerability index in community areas
+38,South Shore,43.0,82.6063579973451,social vulnerability index in community areas
+39,Chatham,44.0,73.9734413468701,social vulnerability index in community areas
+40,Avalon Park,45.0,75.8561225400017,social vulnerability index in community areas
+41,South Chicago,46.0,79.5163467247348,social vulnerability index in community areas
+42,Burnside,47.0,85.6430024488488,social vulnerability index in community areas
+43,Calumet Heights,48.0,53.0930021074419,social vulnerability index in community areas
+44,Roseland,49.0,77.5547936004754,social vulnerability index in community areas
+45,North Center,5.0,13.7436845980964,social vulnerability index in community areas
+46,Pullman,50.0,45.5650520215603,social vulnerability index in community areas
+47,South Deering,51.0,85.3721428025175,social vulnerability index in community areas
+48,East Side,52.0,71.0739711156204,social vulnerability index in community areas
+49,West Pullman,53.0,75.8341580878844,social vulnerability index in community areas
+50,Riverdale,54.0,84.3565231665086,social vulnerability index in community areas
+51,Hegewisch,55.0,74.0836390695204,social vulnerability index in community areas
+52,Garfield Ridge,56.0,54.7519943444078,social vulnerability index in community areas
+53,Archer Heights,57.0,70.1847981299472,social vulnerability index in community areas
+54,Brighton Park,58.0,81.5104662921678,social vulnerability index in community areas
+55,McKinley Park,59.0,70.7220466026113,social vulnerability index in community areas
+56,Lake View,6.0,16.9312936439817,social vulnerability index in community areas
+57,Bridgeport,60.0,66.3386017299552,social vulnerability index in community areas
+58,New City,61.0,83.1955353326751,social vulnerability index in community areas
+59,West Elsdon,62.0,75.5180096979947,social vulnerability index in community areas
+60,Gage Park,63.0,90.4798505466213,social vulnerability index in community areas
+61,Clearing,64.0,55.9708553908199,social vulnerability index in community areas
+62,West Lawn,65.0,78.5284261386088,social vulnerability index in community areas
+63,Chicago Lawn,66.0,90.7997486274631,social vulnerability index in community areas
+64,West Englewood,67.0,81.5101094550786,social vulnerability index in community areas
+65,Englewood,68.0,88.9815162652863,social vulnerability index in community areas
+66,Greater Grand Crossing,69.0,83.4947470691415,social vulnerability index in community areas
+67,Lincoln Park,7.0,16.5065626601661,social vulnerability index in community areas
+68,Ashburn,70.0,69.0871224224352,social vulnerability index in community areas
+69,Auburn Gresham,71.0,80.6052360207367,social vulnerability index in community areas
+70,Beverly,72.0,13.4895216054874,social vulnerability index in community areas
+71,Washington Heights,73.0,66.4630713722018,social vulnerability index in community areas
+72,Mount Greenwood,74.0,24.3278406886242,social vulnerability index in community areas
+73,Morgan Park,75.0,52.2969022168089,social vulnerability index in community areas
+74,O'Hare,76.0,59.9907566862553,social vulnerability index in community areas
+75,Edgewater,77.0,58.0145766086318,social vulnerability index in community areas
+76,Near North Side,8.0,26.1984750904374,social vulnerability index in community areas
+77,Edison Park,9.0,8.16174762769048,social vulnerability index in community areas
+1,Rogers Park,1.0,55.442466924,health care satisfaction rate in community areas
+2,Norwood Park,10.0,68.573138159,health care satisfaction rate in community areas
+3,Jefferson Park,11.0,68.871929734,health care satisfaction rate in community areas
+4,Forest Glen,12.0,66.813378514,health care satisfaction rate in community areas
+5,North Park,13.0,68.584662449,health care satisfaction rate in community areas
+6,Albany Park,14.0,48.591624339,health care satisfaction rate in community areas
+7,Portage Park,15.0,58.316073342,health care satisfaction rate in community areas
+8,Irving Park,16.0,58.51525481,health care satisfaction rate in community areas
+9,Dunning,17.0,65.736819711,health care satisfaction rate in community areas
+10,Montclare,18.0,69.045889751,health care satisfaction rate in community areas
+11,Belmont Cragin,19.0,63.393564431,health care satisfaction rate in community areas
+12,West Ridge,2.0,64.989339698,health care satisfaction rate in community areas
+13,Hermosa,20.0,37.863592345,health care satisfaction rate in community areas
+14,Avondale,21.0,58.923951626,health care satisfaction rate in community areas
+15,Logan Square,22.0,59.829745346,health care satisfaction rate in community areas
+16,Humboldt Park,23.0,44.864819393,health care satisfaction rate in community areas
+17,West Town,24.0,53.460911339,health care satisfaction rate in community areas
+18,Austin,25.0,51.275433585,health care satisfaction rate in community areas
+19,West Garfield Park,26.0,66.545901766,health care satisfaction rate in community areas
+20,East Garfield Park,27.0,64.092900405,health care satisfaction rate in community areas
+21,Near West Side,28.0,50.809984298,health care satisfaction rate in community areas
+22,North Lawndale,29.0,71.327061361,health care satisfaction rate in community areas
+23,Uptown,3.0,53.589236979,health care satisfaction rate in community areas
+24,South Lawndale,30.0,56.543306973,health care satisfaction rate in community areas
+25,Lower West Side,31.0,60.79400522,health care satisfaction rate in community areas
+26,Loop,32.0,72.983369842,health care satisfaction rate in community areas
+27,Near South Side,33.0,59.104070984,health care satisfaction rate in community areas
+28,Armour Square,34.0,63.928089151,health care satisfaction rate in community areas
+29,Douglas,35.0,66.766686299,health care satisfaction rate in community areas
+30,Oakland,36.0,78.584094297,health care satisfaction rate in community areas
+31,Fuller Park,37.0,68.066693509,health care satisfaction rate in community areas
+32,Grand Boulevard,38.0,49.919300674,health care satisfaction rate in community areas
+33,Kenwood,39.0,78.056218759,health care satisfaction rate in community areas
+34,Lincoln Square,4.0,62.243762427,health care satisfaction rate in community areas
+35,Washington Park,40.0,31.727647617,health care satisfaction rate in community areas
+36,Hyde Park,41.0,57.694404451,health care satisfaction rate in community areas
+37,Woodlawn,42.0,51.139955407,health care satisfaction rate in community areas
+38,South Shore,43.0,63.026931479,health care satisfaction rate in community areas
+39,Chatham,44.0,55.894438434,health care satisfaction rate in community areas
+40,Avalon Park,45.0,65.017482365,health care satisfaction rate in community areas
+41,South Chicago,46.0,45.803197601,health care satisfaction rate in community areas
+42,Burnside,47.0,42.776297106,health care satisfaction rate in community areas
+43,Calumet Heights,48.0,63.085674226,health care satisfaction rate in community areas
+44,Roseland,49.0,60.405499991,health care satisfaction rate in community areas
+45,North Center,5.0,58.556604445,health care satisfaction rate in community areas
+46,Pullman,50.0,32.795244904,health care satisfaction rate in community areas
+47,South Deering,51.0,34.288462296,health care satisfaction rate in community areas
+48,East Side,52.0,29.072008043,health care satisfaction rate in community areas
+49,West Pullman,53.0,58.174192452,health care satisfaction rate in community areas
+50,Riverdale,54.0,68.831046012,health care satisfaction rate in community areas
+51,Hegewisch,55.0,65.471041711,health care satisfaction rate in community areas
+52,Garfield Ridge,56.0,60.300762039,health care satisfaction rate in community areas
+53,Archer Heights,57.0,51.537840439,health care satisfaction rate in community areas
+54,Brighton Park,58.0,57.614282041,health care satisfaction rate in community areas
+55,McKinley Park,59.0,38.274033958,health care satisfaction rate in community areas
+56,Lake View,6.0,64.445256902,health care satisfaction rate in community areas
+57,Bridgeport,60.0,34.626607985,health care satisfaction rate in community areas
+58,New City,61.0,47.535486355,health care satisfaction rate in community areas
+59,West Elsdon,62.0,56.80748412,health care satisfaction rate in community areas
+60,Gage Park,63.0,71.211833674,health care satisfaction rate in community areas
+61,Clearing,64.0,53.039433114,health care satisfaction rate in community areas
+62,West Lawn,65.0,49.579758932,health care satisfaction rate in community areas
+63,Chicago Lawn,66.0,45.141538429,health care satisfaction rate in community areas
+64,West Englewood,67.0,63.379487391,health care satisfaction rate in community areas
+65,Englewood,68.0,48.91983799,health care satisfaction rate in community areas
+66,Greater Grand Crossing,69.0,54.300210409,health care satisfaction rate in community areas
+67,Lincoln Park,7.0,66.721110078,health care satisfaction rate in community areas
+68,Ashburn,70.0,54.284595337,health care satisfaction rate in community areas
+69,Auburn Gresham,71.0,59.795216397,health care satisfaction rate in community areas
+70,Beverly,72.0,69.861788368,health care satisfaction rate in community areas
+71,Washington Heights,73.0,72.767026336,health care satisfaction rate in community areas
+72,Mount Greenwood,74.0,61.075610367,health care satisfaction rate in community areas
+73,Morgan Park,75.0,71.495315517,health care satisfaction rate in community areas
+74,O'Hare,76.0,56.644229847,health care satisfaction rate in community areas
+75,Edgewater,77.0,60.897505616,health care satisfaction rate in community areas
+76,Near North Side,8.0,60.563726862,health care satisfaction rate in community areas
+77,Edison Park,9.0,71.534466226,health care satisfaction rate in community areas
+1,Rogers Park,1.0,76.12125163,received needed care rate in community areas
+2,Norwood Park,10.0,95.342240638,received needed care rate in community areas
+3,Jefferson Park,11.0,88.259742269,received needed care rate in community areas
+4,Forest Glen,12.0,83.142270498,received needed care rate in community areas
+5,North Park,13.0,86.654413359,received needed care rate in community areas
+6,Albany Park,14.0,57.34206262,received needed care rate in community areas
+7,Portage Park,15.0,81.457673937,received needed care rate in community areas
+8,Irving Park,16.0,75.482061944,received needed care rate in community areas
+9,Dunning,17.0,85.105615313,received needed care rate in community areas
+10,Montclare,18.0,54.319697565,received needed care rate in community areas
+11,Belmont Cragin,19.0,67.005352013,received needed care rate in community areas
+12,West Ridge,2.0,75.342322775,received needed care rate in community areas
+13,Hermosa,20.0,62.357257096,received needed care rate in community areas
+14,Avondale,21.0,65.518619527,received needed care rate in community areas
+15,Logan Square,22.0,82.383639861,received needed care rate in community areas
+16,Humboldt Park,23.0,51.023785602,received needed care rate in community areas
+17,West Town,24.0,77.612134241,received needed care rate in community areas
+18,Austin,25.0,76.703560262,received needed care rate in community areas
+19,West Garfield Park,26.0,76.299698091,received needed care rate in community areas
+20,East Garfield Park,27.0,83.745438306,received needed care rate in community areas
+21,Near West Side,28.0,73.807218195,received needed care rate in community areas
+22,North Lawndale,29.0,68.711589867,received needed care rate in community areas
+23,Uptown,3.0,74.741208017,received needed care rate in community areas
+24,South Lawndale,30.0,57.600862384,received needed care rate in community areas
+25,Lower West Side,31.0,87.011100588,received needed care rate in community areas
+26,Loop,32.0,86.784497838,received needed care rate in community areas
+27,Near South Side,33.0,72.627131254,received needed care rate in community areas
+28,Armour Square,34.0,59.433220681,received needed care rate in community areas
+29,Douglas,35.0,85.170623933,received needed care rate in community areas
+30,Oakland,36.0,86.46931437,received needed care rate in community areas
+31,Fuller Park,37.0,68.472982253,received needed care rate in community areas
+32,Grand Boulevard,38.0,83.129212673,received needed care rate in community areas
+33,Kenwood,39.0,83.706400225,received needed care rate in community areas
+34,Lincoln Square,4.0,83.72548548,received needed care rate in community areas
+35,Washington Park,40.0,78.407487617,received needed care rate in community areas
+36,Hyde Park,41.0,81.792061811,received needed care rate in community areas
+37,Woodlawn,42.0,78.184897032,received needed care rate in community areas
+38,South Shore,43.0,76.491747356,received needed care rate in community areas
+39,Chatham,44.0,76.242336566,received needed care rate in community areas
+40,Avalon Park,45.0,79.312998687,received needed care rate in community areas
+41,South Chicago,46.0,69.22721009,received needed care rate in community areas
+42,Burnside,47.0,80.760815641,received needed care rate in community areas
+43,Calumet Heights,48.0,89.045758992,received needed care rate in community areas
+44,Roseland,49.0,77.449908061,received needed care rate in community areas
+45,North Center,5.0,78.309990857,received needed care rate in community areas
+46,Pullman,50.0,61.950401378,received needed care rate in community areas
+47,South Deering,51.0,80.719465425,received needed care rate in community areas
+48,East Side,52.0,67.549517389,received needed care rate in community areas
+49,West Pullman,53.0,70.368079256,received needed care rate in community areas
+50,Riverdale,54.0,57.969275238,received needed care rate in community areas
+51,Hegewisch,55.0,89.456837118,received needed care rate in community areas
+52,Garfield Ridge,56.0,86.965648292,received needed care rate in community areas
+53,Archer Heights,57.0,68.754619025,received needed care rate in community areas
+54,Brighton Park,58.0,72.724301123,received needed care rate in community areas
+55,McKinley Park,59.0,80.706138105,received needed care rate in community areas
+56,Lake View,6.0,86.252082376,received needed care rate in community areas
+57,Bridgeport,60.0,75.600089777,received needed care rate in community areas
+58,New City,61.0,54.793432648,received needed care rate in community areas
+59,West Elsdon,62.0,77.645060304,received needed care rate in community areas
+60,Gage Park,63.0,59.971916002,received needed care rate in community areas
+61,Clearing,64.0,78.106503345,received needed care rate in community areas
+62,West Lawn,65.0,68.829165361,received needed care rate in community areas
+63,Chicago Lawn,66.0,65.625777659,received needed care rate in community areas
+64,West Englewood,67.0,85.813536108,received needed care rate in community areas
+65,Englewood,68.0,77.663156365,received needed care rate in community areas
+66,Greater Grand Crossing,69.0,71.071780748,received needed care rate in community areas
+67,Lincoln Park,7.0,91.058111501,received needed care rate in community areas
+68,Ashburn,70.0,53.519167383,received needed care rate in community areas
+69,Auburn Gresham,71.0,68.179223912,received needed care rate in community areas
+70,Beverly,72.0,89.263117625,received needed care rate in community areas
+71,Washington Heights,73.0,86.829765342,received needed care rate in community areas
+72,Mount Greenwood,74.0,94.57414222,received needed care rate in community areas
+73,Morgan Park,75.0,75.916845277,received needed care rate in community areas
+74,O'Hare,76.0,56.641837331,received needed care rate in community areas
+75,Edgewater,77.0,77.954470935,received needed care rate in community areas
+76,Near North Side,8.0,83.34309916,received needed care rate in community areas
+77,Edison Park,9.0,90.651146325,received needed care rate in community areas
