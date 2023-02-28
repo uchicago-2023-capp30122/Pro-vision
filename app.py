@@ -5,15 +5,10 @@ import urllib.request, json
 import plotly.express as px 
 import pandas as pd
 import dash_bootstrap_components as dbc
-# import numpy as np
 import requests
-# import openpyxl
 import copy as cp
-# from plotly.subplots import make_subplots
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.FLATLY])
-
-app.config.suppress_callback_exceptions = True
 
 #------- DATA FOR SOCIOECONOMIC VARIABLE -------#
 # Importing from direct link
@@ -74,7 +69,7 @@ app.layout = html.Div(children = [
     navbar, # Navigation bar
     html.Div([]), # Space
     html.H5('''
-        Visualize the travel time-distance of public facilities/services on 
+        Visualize the time-distance coverage of public facilities/services over 
         socioeconomic data to identify vulnerabilities in the City of Chicago.
         ''', style = {'font-family': 'Gotham', 'margin' : '50px'}), # Main description
     html.Div([
@@ -83,14 +78,16 @@ app.layout = html.Div(children = [
                 placeholder = 'Select a Socioeconomic Variable',
                 searchable = False,
                 id = 'SocEconVar'
-            )], style = {'width': '48%', 'display': 'inline-block'}),
+            )], style = {'width': '30%', 'margin-left' : '100px',
+                         'margin-right' : '50px', 'display': 'inline-block'}),
     html.Div([
             dcc.Dropdown(
                 cleanedData2['Provision'].unique(),
                 placeholder = 'Select a Public Facility',
                 searchable = False,
                 id = 'ProvisionVar'
-            )], style = {'width': '48%', 'display': 'inline-block'}),
+            )],
+            style = {'width': '30%', 'display': 'inline-block'}),
     html.Div(id = 'map') # Displaying joined map
 ])
 
@@ -109,41 +106,94 @@ def update_figure(SocEconValue, ProvisionValue):
     socEconData = cleanedData[cleanedData['SocEconVar'] == SocEconValue]
     provisionsData = cleanedData2[cleanedData2['Provision'] == ProvisionValue]
 
-    #------- CHOROPLETH MAP TO DISPLAY SOCIOECONOMIC VARIABLE -------#
-    trace1 = px.choropleth(
-            socEconData, # Socioeconomic data
-            geojson = chicagoMap, # Community Level Geojson
-            color = 'Value', # Setting color intensity by the values of HCSNS_2016-2018 (i.e., safety variable)
-            color_continuous_scale = 'PuBu', # Choosing color
-            locations = 'Community Area', # Identifies locations from geojson
-            featureidkey = "properties.pri_neigh", # Consider pri_neigh as key from geojson dictionary
-            labels = 'Label', # Labelling socioeconomic variable
+    if SocEconValue and ProvisionValue:
+
+        #------- CHOROPLETH MAP TO DISPLAY SOCIOECONOMIC VARIABLE -------#
+        trace1 = px.choropleth(
+                socEconData, # Socioeconomic data
+                geojson = chicagoMap, # Mapping geoJson
+                color = 'Value', # Setting color intensity by the values of HCSNS_2016-2018 (i.e., safety variable)
+                color_continuous_scale = 'PuBu', # Choosing color
+                locations = 'Community Area', # Identifies locations from geojson
+                featureidkey = "properties.pri_neigh", # Consider pri_neigh as key from geojson dictionary
+                labels = 'Label', # Labelling socioeconomic variable
+                )
+        trace1.update_geos(fitbounds = "locations", visible = False) # Maps shapefile boundary locations from geojson
+        trace1.layout.update(
+            margin = {"r":20,"t":20,"l":20,"b":20}, # Sets boundaries of map
+            showlegend = True # Show legend
             )
-    trace1.update_geos(fitbounds = "locations", visible = False) # Maps shapefile boundary locations from geojson
-    trace1.layout.update(
-        margin = {"r":20,"t":20,"l":20,"b":20}, # Sets boundaries of map
-        showlegend = True # Show legend
-        )
 
-    base_map = cp.deepcopy(trace1) # Creating a base map to add layers
+        base_map = cp.deepcopy(trace1) # Creating a base map to add layers
 
-    #------- SCATTER MAP FOR PUBLIC SERVICES/PROVISIONS -------#
-    trace2 = px.scatter_geo(provisionsData, lat = 'latitude', lon = 'longitud', 
-                            hover_data={'Provision': False, 'longitud': False, 
-                                        'latitude': False, 'ADDRESS': True, 
-                                        'ZIP': True})
-    trace2.layout.update(
-        paper_bgcolor = colors['bg'], # Sets transparent background
-        plot_bgcolor = colors['bg'], # Sets transparent background
-        font_color = colors['font'], # Sets font color
-        margin = {"r":20,"t":20,"l":20,"b":20} # Sets boundaries of map
-        )
+        #------- SCATTER MAP FOR PUBLIC SERVICES/PROVISIONS -------#
+        trace2 = px.scatter_geo(provisionsData,
+                                lat = 'latitude', lon = 'longitud', 
+                                hover_data={'Provision': False, 'longitud': False, 
+                                            'latitude': False, 'ADDRESS': True, 
+                                            'ZIP': True})
+        trace2.layout.update(
+            paper_bgcolor = colors['bg'], # Sets transparent background
+            plot_bgcolor = colors['bg'], # Sets transparent background
+            font_color = colors['font'], # Sets font color
+            margin = {"r":20,"t":20,"l":20,"b":20} # Sets boundaries of map
+            )
 
-    #------- FULL MAP WITH JOINED TRACES -------#
-    joined_map = base_map.add_trace(trace2.data[0])
+        #------- FULL MAP WITH JOINED TRACES -------#
+        joined_map = base_map.add_trace(trace2.data[0])
 
-    return [dcc.Graph(figure = joined_map)]
+        return [dcc.Graph(figure = joined_map)]
+    elif SocEconValue and not ProvisionValue:
+
+        #------- CHOROPLETH MAP TO DISPLAY SOCIOECONOMIC VARIABLE -------#
+        trace1 = px.choropleth(
+                socEconData, # Socioeconomic data
+                geojson = chicagoMap, 
+                color = 'Value', # Setting color intensity by the values of HCSNS_2016-2018 (i.e., safety variable)
+                color_continuous_scale = 'PuBu', # Choosing color
+                locations = 'Community Area', # Identifies locations from geojson
+                featureidkey = "properties.pri_neigh", # Consider pri_neigh as key from geojson dictionary
+                labels = 'Label', # Labelling socioeconomic variable
+                )
+        trace1.update_geos(fitbounds = "locations", visible = False) # Maps shapefile boundary locations from geojson
+        trace1.layout.update(
+            margin = {"r":20,"t":20,"l":20,"b":20}, # Sets boundaries of map
+            showlegend = True # Show legend
+            )
+        
+        return [dcc.Graph(figure = trace1)]
+    elif ProvisionValue and not SocEconValue:
+
+        #------- SCATTER MAP FOR PUBLIC SERVICES/PROVISIONS -------#
+        trace2 = px.scatter_geo(provisionsData,
+                                lat = 'latitude', lon = 'longitud', 
+                                hover_data={'Provision': False, 'longitud': False, 
+                                            'latitude': False, 'ADDRESS': True, 
+                                            'ZIP': True})
+        trace2.layout.update(
+            paper_bgcolor = colors['bg'], # Sets transparent background
+            plot_bgcolor = colors['bg'], # Sets transparent background
+            font_color = colors['font'], # Sets font color
+            margin = {"r":20,"t":20,"l":20,"b":20} # Sets boundaries of map
+            )
+
+        return [dcc.Graph(figure = trace2)]
+    else:
+        #------- SCATTER MAP FOR PUBLIC SERVICES/PROVISIONS -------#
+        trace1 = px.choropleth(
+                geojson = chicagoMap, 
+                color_continuous_scale = 'PuBu', # Choosing color
+                locations = 'Community Area', # Identifies locations from geojson
+                featureidkey = "properties.pri_neigh", # Consider pri_neigh as key from geojson dictionar
+                )
+        trace1.update_geos(fitbounds = "locations", visible = False) # Maps shapefile boundary locations from geojson
+        trace1.layout.update(
+            margin = {"r":20,"t":20,"l":20,"b":20}, # Sets boundaries of map
+            showlegend = True # Show legend
+            )
+        return dcc.Graph(figure = trace1)
+
 
 # Runs app from terminal with "python3 app.py". Once you run the map, you can exit with 'ctrl + c'
 if __name__ == '__main__':
-    app.run_server(host='127.0.0.1', port='8080', debug = False) # If there is a port error you can change it to '8080'
+    app.run_server(host='127.0.0.1', port='8070', debug = False) # If there is a port error you can change it to '8080'
