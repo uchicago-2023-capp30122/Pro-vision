@@ -1,7 +1,8 @@
-import googlemaps
-import csv
+#import googlemaps
+#import csv
 from datetime import datetime
 from traveltimepy import Driving, Coordinates, TravelTimeSdk
+from data_wrangling import *
 
 # hide key
 api_key = "AIzaSyABteA2oGa6yJK1u92PAvbKhcpMiiE21w8"
@@ -18,7 +19,7 @@ def geocode(address):
     return (lat, long)
 
 
-def isochrone(coords, address):
+def isochrone(coords):
     if coords is None:
         coords = geocode(address)
     alat, along = coords
@@ -29,3 +30,7 @@ def isochrone(coords, address):
         travel_time=600,
     )
     return result
+
+dict_provision = clean_prov()
+provisions = pd.concat(dict_provision.values())
+provisions['isochrones'] = provisions['coords'].apply(isochrone)
