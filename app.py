@@ -65,15 +65,16 @@ app.layout = html.Div(children = [
     navbar, # Navigation bar
 
     html.Div([]), # Space
-
-    html.H5('''
-        Visualize the time-distance coverage of public facilities/services over 
-        socioeconomic data to identify vulnerabilities in the City of Chicago.
-        ''', style = {'font-family': 'Gotham', 'margin' : '50px'}), # Main description
     
     html.Div([
     
         html.Div([
+     
+            html.H5('''
+            Visualize the time-distance coverage of public facilities over 
+            socioeconomic data to identify vulnerabilities in the City of Chicago.
+            ''', style = {'font-family': 'Gotham', 'margin' : '50px'}), # Main description
+
             dcc.Dropdown(
                 cleanedData['SocEconVar'].unique(),
                 placeholder = 'Select a Socioeconomic Variable',
@@ -88,12 +89,18 @@ app.layout = html.Div(children = [
                 searchable = False,
                 id = 'ProvisionVar',
                 style = {'margin-left': '20px'}
-            )
+            ),
+
+            # html.H5('''
+            # Number of Public Facilities:
+            # ''', style = {'font-family': 'Gotham', 'margin' : '50px'})
+
         ], className="2 columns",
            style = {'width': '40%', 'display': 'inline-block'}),
 
         html.Div(
-            id = 'map', style={'margin-left': '50px', 'width':'50%', 'display': 'inline-block'},
+            id = 'map', style={'margin-left': '50px', 'width':'50%', 
+                               'display': 'inline-block'},
             className="four columns"),
         ], 
         className="row"
