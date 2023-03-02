@@ -29,7 +29,7 @@ class Graph(object):
         df = pd.read_csv(sei_data, usecols = \
                         ['Name', 'GEOID', 'Longitude', 'Latitude', 'indicator', \
                          'value'])    # Confirm with Setu's csv
-        df = df[df.indicator == sei_ind]
+        df = df[df['indicator'] == sei_ind]
         df['Tensioned'] = df['indicator'].apply(\
             lambda x: 1 if x.nlargest(NUMBER_OF_SEI, 'value') else 0)
         # df['Prov_time'] = see below
@@ -57,9 +57,14 @@ class Graph(object):
         Returns 
         """
 
-        matrix = np.fromfunction(lambda i,j: setu(self.df.iloc[i]['coordinates'], self.df.iloc[j]['coordinates']), (len(self.df), len(self.df)))   # Setu's function
+        matrix = np.fromfunction(lambda i, j: setu(\
+            self.df.iloc[i]['coordinates'], self.df.iloc[j]['coordinates']), (len(self.df), len(self.df)))   # Setu's function
+        # In case I found out how to build just an upper triangular matrix
+        #       matrix = np.triu(matrix) + np.triu(matrix, k = 1).T
 
-        return pd.DataFrame(matrix, columns = list(self.df.'Name'), index = list(self.df.'Name'))
+        return pd.DataFrame(matrix, \
+                            columns = list(self.df['Name']), \
+                            index = list(self.df['Name']))
 
 
     def gen_adjac_matrix(self, ):
@@ -71,7 +76,7 @@ class Graph(object):
         Returns
         """
 
-        pass
+        return self.gen_dist_matrix().applymap(lambda x: 1 if x <= 10 else 0)
 
 
     def gen_graph(self, ):
@@ -79,11 +84,13 @@ class Graph(object):
         Generates the graph that models the city of Chicago as a network of 
             census tracts, where connected nodes are "near" census tracts using
             the adjacency matrix. The value of each node indicates whether the 
-            census tract is near a police station and whether it is tensionned
+            census tract is near a police station and whether it is tensioned
             (top10 in homicide rate). 
         Parameters:
         Returns
         """
+
+        graph = nx.Graph(self.gen_adjac_matrix())
 
         pass
 
