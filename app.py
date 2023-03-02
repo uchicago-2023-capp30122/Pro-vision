@@ -13,29 +13,30 @@ app = Dash(__name__, external_stylesheets=[dbc.themes.FLATLY])
 
 #------- DATA FOR SOCIOECONOMIC VARIABLE -------#
 # Importing from direct link
-raw_data = requests.get("https://uchicago.box.com/shared/static/ooyygpkhml7vd6p170e3tgl303cfkkek.xlsx").content
+data = requests.get("https://uchicago.box.com/shared/static/1i3rrpl2t8yvz9z25nrc7rzwauopkd34.xlsx").content
 # Reading file to pandas
-cleanedData = pd.read_excel(raw_data, sheet_name = "Community areas", dtype={'Layer': str, 'Name': str, 'GEOID': int, 
-                                                                      'SocEconVar': str, 'Value': str, 'Quintiles': int,
-                                                                      'Label': str})
-cleanedData = cleanedData.rename(columns={'Name': 'Community Area'}) 
-# Getting rid of commas in the variable Value
-cleanedData['Value'] = cleanedData['Value'].str.replace(',','')
-# Parsing Value to numeric
-cleanedData['Value'] = pd.to_numeric(cleanedData['Value'], downcast='float')
+cleanedData = pd.read_excel(data, sheet_name = "in", dtype={'GEOID': str, 'Longitude': float, 'Latitude': float, 
+                                                            'geometry': str, 'indicator': str, 'value': float,
+                                                            'bin_value_bin': str})
+cleanedData = cleanedData.rename(columns={'indicator': 'SocEconVar', 'GEOID': 'geoid10'}) 
 
 #------- GEOJSON TO DISPLAY SOCIOECONOMIC VARIABLE -------#
 # Importing the city of chicago geojson community level map
-with urllib.request.urlopen("https://uchicago.box.com/shared/static/0hyrwzbja479o01f0ke99b418zvsudjr.geojson") as url:
+with urllib.request.urlopen("https://uchicago.box.com/shared/static/piwa29gvoz137t73nyxoogsntqhilune.geojson") as url:
         chicagoMap = json.load(url)
 
 #------- DATA TO DISPLAY PUBLIC SERVICES/PROVISIONS -------#
 # Importing from direct link
-raw_data2 = requests.get("https://uchicago.box.com/shared/static/tuq2cw0d18e6wsa4mixvos1g1lp5z3yp.xlsx").content
+raw_data2 = requests.get("https://uchicago.box.com/shared/static/lvznfe58bg4o5g7nhqfxt8lbn0e4hyba.xlsx").content
 # Reading file to pandas
-cleanedData2 = pd.read_excel(raw_data2, sheet_name = "Police_Stations_-_Map", 
-                            dtype={'Provision': str, 'ADDRESS': str, 'ZIP': str, 
-                                    'latitude': float, 'longitud': float})
+cleanedData2 = pd.read_excel(raw_data2, sheet_name = "in", 
+                             dtype={'ADDRESS': str, 'CITY': str, 'STATE': str, 
+                                   'ZIP': str, 'full_address': str, 'coords': tuple,
+                                    'type': str, 'isochrones': str
+                                    })
+cleanedData2[['latitude', 'longitude']] = cleanedData2['coords'].apply(\
+            lambda x: pd.Series(str(x).strip('()').split(',')))
+
 
 #------- NAVIGATION BAR -------#
 UChi_logo = "https://www.lib.uchicago.edu/static/base/images/unvlogo-white.png"
@@ -62,29 +63,42 @@ navbar = dbc.Navbar(
 #------- DASHBOARD STRUCTURE -------#
 app.layout = html.Div(children = [
     navbar, # Navigation bar
+
     html.Div([]), # Space
+
     html.H5('''
         Visualize the time-distance coverage of public facilities/services over 
         socioeconomic data to identify vulnerabilities in the City of Chicago.
         ''', style = {'font-family': 'Gotham', 'margin' : '50px'}), # Main description
+    
     html.Div([
+    
+        html.Div([
             dcc.Dropdown(
                 cleanedData['SocEconVar'].unique(),
                 placeholder = 'Select a Socioeconomic Variable',
                 searchable = False,
-                id = 'SocEconVar'
-            )], style = {'width': '30%', 'margin-left': '100px',
-                         'margin-right': '50px', 'display': 'inline-block'}),
-    html.Div([
+                id = 'SocEconVar',
+                style = {'margin-left': '20px', 'margin-bottom': '30px'}
+            ),
+            
             dcc.Dropdown(
-                cleanedData2['Provision'].unique(),
+                cleanedData2['type'].unique(),
                 placeholder = 'Select a Public Facility',
                 searchable = False,
-                id = 'ProvisionVar'
-            )],
-            style = {'width': '30%', 'display': 'inline-block'}),
-    html.Div(id = 'map', 
-             style={"height": 1500, 'display': 'inline-block'}) # Displaying joined map
+                id = 'ProvisionVar',
+                style = {'margin-left': '20px'}
+            )
+        ], className="2 columns",
+           style = {'width': '40%', 'display': 'inline-block'}),
+
+        html.Div(
+            id = 'map', style={'margin-left': '50px', 'width':'50%', 'display': 'inline-block'},
+            className="four columns"),
+        ], 
+        className="row"
+    )
+
 ])
 
 
@@ -100,7 +114,7 @@ def update_figure(SocEconValue, ProvisionValue):
     global chicagoMap
 
     socEconData = cleanedData[cleanedData['SocEconVar'] == SocEconValue]
-    provisionsData = cleanedData2[cleanedData2['Provision'] == ProvisionValue]
+    provisionsData = cleanedData2[cleanedData2['type'] == ProvisionValue]
 
     if SocEconValue and ProvisionValue:
         trace1 = ut.socioeconomic_map(socEconData, chicagoMap)
