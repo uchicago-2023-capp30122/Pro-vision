@@ -35,13 +35,39 @@ class Graph(object):
         df_extended = df
         df_extended['Tensioned'] = df_extended['indicator'].apply(\
             lambda x: 1 if x.nlargest(NUMBER_OF_SEI, 'value') else 0)
-        # df['Prov_within'] = using GeoPandas
+        # df['Prov_time'] = see below
+        df_extended['Prov_near'] = df_extended['Prov_time'].apply(lambda x: 1 if x <= 10 else 0)
         self.df_extended = df_extended
 
 
-    
+        
+        for c in df:
+            min_dist = 10000000
+            for p in prov_centers:
+                    dist = ()
+                    if dist < min_dist:
+                        min_dist = dist
+
+
         pass
 
+
+    def gen_dist_matrix(self, ):
+        """
+        Generates a symmetric matrix where each element is the distance in time
+            from census tract i to census tract j.
+        Paramters:
+        Returns 
+        """
+
+        matrix = np.fromfunction(lambda i, j: setu(\
+            self.df.iloc[i]['coordinates'], self.df.iloc[j]['coordinates']), (len(self.df), len(self.df)))   # Setu's function
+        # In case I found out how to build just an upper triangular matrix
+        #       matrix = np.triu(matrix) + np.triu(matrix, k = 1).T
+
+        return pd.DataFrame(matrix, \
+                            columns = list(self.df['Name']), \
+                            index = list(self.df['Name']))
 
 
     def gen_adjac_matrix(self, ):
@@ -53,8 +79,7 @@ class Graph(object):
         Returns
         """
 
-        # Use GeoPandas
-        pass
+        return self.gen_dist_matrix().applymap(lambda x: 1 if x <= 10 else 0)
 
 
     def gen_graph(self, ):
@@ -69,7 +94,6 @@ class Graph(object):
         """
 
         graph = nx.Graph(self.gen_adjac_matrix())
-        # Include labels
 
         pass
 
