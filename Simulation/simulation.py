@@ -1,13 +1,15 @@
 import pandas as pd
 import geopandas as gpd
+from shapely.geometry import Polygon, LineString, Point
 import numpy as np
 import networkx as nx
+import urllib.request, json
 from point_in_area import point_in_area
-from Setu import distance # adjust name
+import matplotlib.pyplot as plt
 
 
 
-class Graph(object):
+class Network(object):
     """
     ---
     """
@@ -20,19 +22,18 @@ class Graph(object):
         """
 
         NUMBER_OF_SEI = 10
-
+        com_bounds = gpd.read_file(urllib.request.urlopen(com_areas_boundaries))
+        com_bounds = com_bounds[['geoid10', 'geometry']]
 
 
         prov_centers = pd.read_csv(prov_data, usecols = \
                                    ['ADDRESS', 'coords', 'type'])
-        prov_centers = prov_centers[prov_centers.type == prov_serv] 
+        prov_centers = prov_centers[prov_centers['type'] == prov_serv] 
         prov_centers[['Latitude', 'Longitude']] = prov_centers['coords'].apply(\
             lambda x: pd.Series(str(x).strip('()').split(',')))
+        prov_centers['coords_geo'] = prov_centers['coords'].apply(\
+            lambda x: gpd.GeoSeries(Point(x)))
         self.prov_centers = prov_centers
-
-        # Create geoseries for provision_centers
-        #   Actually, better include the GeoSeries of Points as a new col. Vid infra doubt...
-
 
 
 
@@ -42,18 +43,18 @@ class Graph(object):
         df = df[df['indicator'] == sei_ind]
         self.df = df
 
-        com_areas = open(com_areas_boundaries)
-        self.com_areas = gpd.read_file(com_areas)  # This should be included in df_extended as a col. Possible to include GeoSeries in DataFrame?
-
-
         df_extended = df
-        df_extended['Tensioned'] = df_extended['indicator'].apply(\
-            lambda x: 1 if x.nlargest(NUMBER_OF_SEI, 'value') else 0)
-        df_extended['Prov_within'] = df['Boundaries'].apply(lambda x: 1 if point_in_area(<prov_centers_GeoSeries>, x) else 0)
+        df_extended['Tensioned'] = 0
+        df_extended.loc[df_extended['value'] >= min(\
+            df_extended.nlargest(NUMBER_OF_SEI, 'value')['value']), \
+            'Tensioned'] = 1
+        df_extended = df_extended.merge(\
+            com_bounds, how = 'outer', left_on = 'GEOID', right_on = 'geoid10')
+        df_extended.drop('geoid10', axis = 1, inplace = True) 
+        df_extended['Prov_within'] = df['geometry'].apply(\
+            lambda x: 1 if point_in_area(self.prov_centers['coords_geo'], x) else 0)
         self.df_extended = df_extended
-
-
-    
+  
         pass
 
 
@@ -68,7 +69,7 @@ class Graph(object):
         Returns
         """
 
-        graph = nx.Graph()
+        G = nx.Graph()
         # Iterate over the districts and add them as nodes to the graph
         for i, _ in self.com_areas.iterrows():
             G.add_node(i)
@@ -96,4 +97,8 @@ class Graph(object):
         Parameters:
         Returns        
         """
+
+        df_shock = self.df_extended # risk of modifying self.df_extended?
+        # df_shock['Tensioned_shock'] = 
+        # df_shock['Prov_within_shock'] = 
 
