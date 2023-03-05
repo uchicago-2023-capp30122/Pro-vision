@@ -1,9 +1,6 @@
-# These are the packages. You may need to pip install some of them.
-# These should be included in the virtual environment
 from dash import Dash, dcc, html, Input, Output
 import utility as ut
 import urllib.request, json 
-import plotly.express as px 
 import pandas as pd
 import dash_bootstrap_components as dbc
 import requests
@@ -11,32 +8,24 @@ import copy as cp
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.FLATLY])
 
+#------- GEOJSON MAP OF THE CITY OF CHICAGO -------#
+with open("Boundaries - Census Tracts - 2010.geojson") as gjs:
+        chicagoMap = json.load(gjs)
+
+#------- ISOCHRONES' GEOJSON -------#
+with open("isochrone_best.json") as js:
+        isochroneMaps = json.load(js)
+
 #------- DATA FOR SOCIOECONOMIC VARIABLE -------#
-# Importing from direct link
-data = requests.get("https://uchicago.box.com/shared/static/1i3rrpl2t8yvz9z25nrc7rzwauopkd34.xlsx").content
-# Reading file to pandas
-cleanedData = pd.read_excel(data, sheet_name = "in", dtype={'GEOID': str, 'Longitude': float, 'Latitude': float, 
+cleanData = pd.read_excel('final_geo_SEI.xlsx', sheet_name = "in", dtype={'GEOID': str, 'Longitude': float, 'Latitude': float, 
                                                             'geometry': str, 'indicator': str, 'value': float,
                                                             'bin_value_bin': str})
-cleanedData = cleanedData.rename(columns={'indicator': 'SocEconVar', 'GEOID': 'geoid10'}) 
+cleanData = cleanData.rename(columns={'indicator': 'SocEconVar', 'GEOID': 'geoid10'}) 
 
-#------- GEOJSON TO DISPLAY SOCIOECONOMIC VARIABLE -------#
-# Importing the city of chicago geojson community level map
-with urllib.request.urlopen("https://uchicago.box.com/shared/static/piwa29gvoz137t73nyxoogsntqhilune.geojson") as url:
-        chicagoMap = json.load(url)
-
-#------- DATA TO DISPLAY PUBLIC SERVICES/PROVISIONS -------#
-# Importing from direct link
-raw_data2 = requests.get("https://uchicago.box.com/shared/static/lvznfe58bg4o5g7nhqfxt8lbn0e4hyba.xlsx").content
-# Reading file to pandas
-cleanedData2 = pd.read_excel(raw_data2, sheet_name = "in", 
-                             dtype={'ADDRESS': str, 'CITY': str, 'STATE': str, 
-                                   'ZIP': str, 'full_address': str, 'coords': tuple,
-                                    'type': str, 'isochrones': str
-                                    })
-cleanedData2[['latitude', 'longitude']] = cleanedData2['coords'].apply(\
+#------- DATA TO DISPLAY PUBLIC FACILITIES/PROVISIONS -------#
+cleanData2 = pd.read_csv('prov_isoID.csv')
+cleanData2[['latitude', 'longitude']] = cleanData2['coords'].apply(\
             lambda x: pd.Series(str(x).strip('()').split(',')))
-
 
 #------- NAVIGATION BAR -------#
 UChi_logo = "https://www.lib.uchicago.edu/static/base/images/unvlogo-white.png"
@@ -52,7 +41,7 @@ navbar = dbc.Navbar(
                     align="center",
                 ),
                 href="#",
-                style={"textDecoration": "none", 'font-family': 'Times New Roman'},
+                style={"textDecoration": "none"},
             ),
         ]
     ),
@@ -70,44 +59,75 @@ app.layout = html.Div(children = [
     
         html.Div([
      
-            html.H5('''
+            html.H5( # Main description
+            '''
             Visualize the time-distance coverage of public facilities over 
             socioeconomic data to identify vulnerabilities in the City of Chicago.
-            ''', style = {'font-family': 'Gotham', 'margin' : '50px'}), # Main description
+            ''', style = {'margin' : '50px'}
+            ),
 
-            dcc.Dropdown(
-                cleanedData['SocEconVar'].unique(),
+            dcc.Dropdown( # Choose Socioeconomic Variable
+                cleanData['SocEconVar'].unique(),
                 placeholder = 'Select a Socioeconomic Variable',
-                searchable = False,
+                searchable = True,
                 id = 'SocEconVar',
                 style = {'margin-left': '20px', 'margin-bottom': '30px'}
             ),
             
-            dcc.Dropdown(
-                cleanedData2['type'].unique(),
+            dcc.Dropdown( # Choose Public Facility
+                cleanData2['type'].unique(),
                 placeholder = 'Select a Public Facility',
-                searchable = False,
+                searchable = True,
                 id = 'ProvisionVar',
-                style = {'margin-left': '20px'}
+                style = {'margin-left': '20px', 'margin-bottom': '30px'}
             ),
 
-            # html.H5('''
-            # Number of Public Facilities:
-            # ''', style = {'font-family': 'Gotham', 'margin' : '50px'})
+            html.H5( # Count number of facilities
+                id = 'facility-counter',
+                style = {'margin' : '50px', 'margin-bottom': '30px'}
+            ),
+
+            html.Div( # Display map
+            id = 'hist', style={'margin': '50px'}
+            )
 
         ], className="2 columns",
            style = {'width': '40%', 'display': 'inline-block'}),
 
-        html.Div(
+        html.Div( # Display map
             id = 'map', style={'margin-left': '50px', 'width':'50%', 
                                'display': 'inline-block'},
-            className="four columns"),
+            className="four columns")
         ], 
         className="row"
     )
 
 ])
 
+@app.callback(
+    Output(component_id = 'hist', component_property = 'children'),
+    Input(component_id = 'SocEconVar', component_property = 'value'),
+    Input(component_id = 'ProvisionVar', component_property = 'value')
+)
+def update_figure(SocEconValue, ProvisionValue):
+    if ProvisionValue:
+        socEconData = cleanData[cleanData['SocEconVar'] == SocEconValue]
+        hist = socEconData['value']
+        return [dcc.Graph(figure = hist)]
+
+@app.callback(
+    Output(component_id = 'facility-counter', component_property = 'children'),
+    Input(component_id = 'ProvisionVar', component_property = 'value')
+)
+def update_counter(ProvisionValue):
+
+    if ProvisionValue:
+        global cleanData2
+        provisionsData = cleanData2[cleanData2['type'] == ProvisionValue]
+        counter = len(provisionsData['type'])
+        return f'Number of public facilities: {counter}'
+    else:
+        return f'Number of public facilities: 0'
 
 @app.callback(
     Output(component_id = 'map', component_property = 'children'),
@@ -116,30 +136,50 @@ app.layout = html.Div(children = [
 )
 def update_figure(SocEconValue, ProvisionValue):
 
-    global cleanedData
-    global cleanedData2
     global chicagoMap
+    global isochroneMaps
 
-    socEconData = cleanedData[cleanedData['SocEconVar'] == SocEconValue]
-    provisionsData = cleanedData2[cleanedData2['type'] == ProvisionValue]
+    global cleanData
+    global cleanData2
 
     if SocEconValue and ProvisionValue:
+
+        socEconData = cleanData[cleanData['SocEconVar'] == SocEconValue]
+        provisionsData = cleanData2[cleanData2['type'] == ProvisionValue]
+
         trace1 = ut.socioeconomic_map(socEconData, chicagoMap)
         base_map = cp.deepcopy(trace1) # Base map copy to add layers
         trace2 = ut.facilities_map(provisionsData, chicagoMap)
         joined_map = base_map.add_trace(trace2.data[0]) # Overlayed map
-        return [dcc.Graph(figure = joined_map)]
+
+        isochroneMap = isochroneMaps[ProvisionValue]
+        coverage = ut.isochrone_map(cleanData2, isochroneMap) # Coverage map
+        fullMap = joined_map.add_trace(coverage.data[0]) # Overlayed map w/coverage
+
+        return [dcc.Graph(figure = fullMap)]
+    
     elif SocEconValue and not ProvisionValue:
-        base_map = ut.socioeconomic_map(socEconData, chicagoMap)
-        return [dcc.Graph(figure = base_map)]
+        socEconData = cleanData[cleanData['SocEconVar'] == SocEconValue]
+
+        trace1 = ut.socioeconomic_map(socEconData, chicagoMap)
+
+        return [dcc.Graph(figure = trace1)]
     elif ProvisionValue and not SocEconValue:
-        trace1 = ut.empty_map(cleanedData, chicagoMap)
-        empty_map = cp.deepcopy(trace1) # Base map copy to add layers
-        facilities_map = ut.facilities_map(provisionsData, chicagoMap)
+        provisionsData = cleanData2[cleanData2['type'] == ProvisionValue]
+
+        trace0 = ut.empty_map(cleanData, chicagoMap)
+        empty_map = cp.deepcopy(trace0) # Base map copy to add layers
+        facilities_map = ut.facilities_map(provisionsData, chicagoMap) # Facilities map
         joined_map = empty_map.add_trace(facilities_map.data[0]) # Overlayed map
-        return [dcc.Graph(figure = joined_map)]
+
+        isochroneMap = isochroneMaps[ProvisionValue]
+        coverage = ut.isochrone_map(cleanData2, isochroneMap) # Coverage map
+        fullMap = joined_map.add_trace(coverage.data[0]) # Overlayed map w/coverage
+
+        return [dcc.Graph(figure = fullMap)]
     else:
-        empty_map = ut.empty_map(cleanedData, chicagoMap)
+        empty_map = ut.empty_map(cleanData, chicagoMap)
+
         return [dcc.Graph(figure = empty_map)]
 
 
