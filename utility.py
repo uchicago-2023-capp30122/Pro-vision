@@ -97,7 +97,7 @@ def isochrone_map(df, geojsonfile):
             locations = 'full_address',
             featureidkey = "properties.full_address", # Consider pri_neigh as key from geojson dictionary
             #color = 'coords',
-            color_discrete_sequence = [colors['coverage']], #for _ in df['full_address']],
+            color_discrete_sequence = [colors['bg']], #for _ in df['full_address']],
             projection = "gnomonic" 
             )
     trace3.update_geos(fitbounds = "locations", visible = False) # Maps shapefile boundary locations from geojson
