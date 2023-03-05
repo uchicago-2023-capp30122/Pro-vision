@@ -1,11 +1,11 @@
 from datetime import datetime
 
-from traveltimepy import Location, Coordinates, PublicTransport, Property, FullRange, TravelTimeSdk
+from traveltimepy import Location, Coordinates, PublicTransport, Property, FullRange, TravelTimeSdk, Driving
 
 
-def get_distances(Network, *, \
+def get_distances(origins_df, destinations_df, *, \
     dep_time = datetime.now(),
-    lim_time = 600,
+    lim_time = 14400,
     mode = 'driving'):
     """
     Uses TravelTime API to get the distances from each community area to each
@@ -20,18 +20,22 @@ def get_distances(Network, *, \
     sdk = TravelTimeSdk(app_id = APP_ID, api_key = APP_KEY)
 
 
-    com_areas = Network.df.to_dict(orient = 'records')
-    prov_cens = Network.prov_centers.to_dict(orient = 'records')
+    com_areas = origins_df.to_dict(orient = 'records')
+    prov_cens = destinations_df.to_dict(orient = 'records')
     locations_com = []
     locations_com_traveltime = []
     for com in com_areas:
-        com['id'] = com.pop('Name')
-        com['coords'] = {'lat': com['Latitude'], 'lng': com['Longitude']}
+        com['id'] = com.pop('community_area')
+        com['coords'] = {'lat': com['latitude'], 'lng': com['longitude']}
         del com['GEOID']
-        del com['Latitude']
-        del com['Longitude']
-        del com['indicator']
+        del com['latitude']
+        del com['longitude']
+        del com['type']
         del com['value']
+        del com['boundaries']
+        del com['Tensioned']
+        del com['geometry']
+        del com['Prov_within']
         locations_com.append(com)
         locations_com_traveltime.append(\
             Location(id = com['id'], \
@@ -54,16 +58,19 @@ def get_distances(Network, *, \
     
 
     times = {}
-    for com in locations_prov:
+    for com in locations_com:
         key = com['id']
         times[key] = sdk.time_filter(\
             locations = locations_com_traveltime + locations_prov_traveltime, \
             search_ids = {com['id']: [prov['id'] for prov in locations_prov]}, \
             departure_time = dep_time, \
             travel_time = lim_time, \
-            transportation = PublicTransport(type = mode), \
+            transportation = Driving(), \
             properties = [Property.TRAVEL_TIME], \
-            full_range = FullRange(enabled = False) \
         )
 
-    return times   # recall: this is a dictionary, where each com_area name is the key and the value is the list of TravelTime objects with the time dist from this com_area to all police stations 
+    for com, result in times.items():
+
+
+
+    # return times   # recall: this is a dictionary, where each com_area name is the key and the value is the list of TravelTime objects with the time dist from this com_area to all police stations 
