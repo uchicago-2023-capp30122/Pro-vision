@@ -96,12 +96,12 @@ def isochrone_map(df, geojsonfile):
             geojson = geojsonfile, # Mapping geoJson
             locations = 'full_address',
             featureidkey = "properties.full_address", # Consider pri_neigh as key from geojson dictionary
-            color = [i for i in df['full_address']],
-            color_discrete_sequence = [colors['coverage'] for i in range(0, len(df['full_address']))],
+            #color = 'coords',
+            color_discrete_sequence = [colors['coverage']], #for _ in df['full_address']],
             projection = "gnomonic" 
             )
     trace3.update_geos(fitbounds = "locations", visible = False) # Maps shapefile boundary locations from geojson
-    trace3.update_traces(marker_line_color = 'white', marker_line_width=1.5)
+    trace3.update_traces(marker_line_color = 'black', marker_line_width=0.5)
     trace3.layout.update(
         width = 900, height = 350,
         paper_bgcolor = colors['bg'],

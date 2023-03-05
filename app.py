@@ -12,7 +12,7 @@ with open("Boundaries - Census Tracts - 2010.geojson") as gjs:
         chicagoMap = json.load(gjs)
 
 #------- ISOCHRONES' GEOJSON -------#
-with open("isochrone_best.json") as js:
+with open("iso_coords.geojson") as js:
         isochroneMaps = json.load(js)
 
 #------- DATA FOR SOCIOECONOMIC VARIABLE -------#
@@ -150,7 +150,7 @@ def update_figure(SocEconValue, ProvisionValue):
         joined_map = base_map.add_trace(trace2.data[0]) # Overlayed map
 
         isochroneMap = isochroneMaps[ProvisionValue]
-        coverage = ut.isochrone_map(cleanData2, isochroneMap) # Coverage map
+        coverage = ut.isochrone_map(provisionsData, isochroneMap) # Coverage map
         fullMap = joined_map.add_trace(coverage.data[0]) # Overlayed map w/coverage
 
         return [dcc.Graph(figure = fullMap)]
@@ -170,7 +170,7 @@ def update_figure(SocEconValue, ProvisionValue):
         joined_map = empty_map.add_trace(facilities_map.data[0]) # Overlayed map
 
         isochroneMap = isochroneMaps[ProvisionValue]
-        coverage = ut.isochrone_map(cleanData2, isochroneMap) # Coverage map
+        coverage = ut.isochrone_map(provisionsData, isochroneMap) # Coverage map
         fullMap = joined_map.add_trace(coverage.data[0]) # Overlayed map w/coverage
 
         return [dcc.Graph(figure = fullMap)]
