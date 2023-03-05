@@ -1,6 +1,4 @@
 import plotly.express as px
-import pandas as pd
-import seaborn as sns
 
 # Setting general colors
 colors = {
@@ -8,7 +6,7 @@ colors = {
     'font': '#767676', # Dark Gray
     'marker': '#800000', # Maroon
     'coverage': 'rgba(128,0,0,0.3)', # Maroon with some transparency
-    'default': '#D6D6CE' # Light Gray
+    'default': '#D6D6CE', # Light Gray
 }
 
 def empty_map(df, geojsonfile):
@@ -30,7 +28,7 @@ def empty_map(df, geojsonfile):
     trace0.layout.update(
         width = 800, height = 600,
         margin = {"r":0,"t":10,"l":0,"b":0},
-        showlegend = False # Show legend
+        showlegend = False 
         )
 
     return trace0
@@ -46,7 +44,7 @@ def socioeconomic_map(df, geojsonfile):
                                 '2': '#FED628',
                                 '1': '#F1F374',
                                 '0': '#D6D6CE'},
-            range_color=(0, 3),
+            labels = {'bin_value_bin': ''},
             locations = 'geoid10', # Identifies locations from geojson
             featureidkey = "properties.geoid10", # Consider pri_neigh as key from geojson dictionary
             projection = 'gnomonic'
@@ -54,21 +52,16 @@ def socioeconomic_map(df, geojsonfile):
     trace1.update_geos(fitbounds = "locations", visible = False) # Maps shapefile boundary locations from geojson
     trace1.update_traces(marker_line_color = "white", marker_line_width = 0.5)
     trace1.layout.update(
+        legend = dict(y=0.9, x=0.8),
         coloraxis_colorbar = dict(
-            thicknessmode = "pixels", thickness = 30, ticks="outside",
-            lenmode="pixels", len = 200,
-            yanchor="top", y = 2
+            thicknessmode = "pixels", thickness = 30, ticks="inside",
+            lenmode="pixels", len = 175
             ),
+        font_color = colors['font'],
         width = 800, height = 600,
         margin = {"r":0,"t":10,"l":0,"b":0}, # Sets boundaries of map
         showlegend = True # Show legend
         )
-    # trace1.update_coloraxes(
-    #     title = "Quartiles",
-    #     tickvals = ['0', '1', '2', '3'],
-    #     ticktext = ["Quartile I", "Quartile II", "Quartile III", "Quartile IV"],
-    #     tickmode = 'array',
-    #     showticklabels = True)
     return trace1
 
 def facilities_map(df, geojsonfile):
@@ -101,15 +94,16 @@ def isochrone_map(df, geojsonfile):
     trace3 = px.choropleth(
             df, # Socioeconomic data
             geojson = geojsonfile, # Mapping geoJson
-            locations = 'full_address', # Identifies locations from geojson
+            locations = 'full_address',
             featureidkey = "properties.full_address", # Consider pri_neigh as key from geojson dictionary
-            color_discrete_sequence = [colors['coverage']],
-            projection = "gnomonic" # mercator, orthographic, azimuthal equal area, azimuthal equidistant, gnomonic, mollweide
+            color = [i for i in df['full_address']],
+            color_discrete_sequence = [colors['coverage'] for i in range(0, len(df['full_address']))],
+            projection = "gnomonic" 
             )
     trace3.update_geos(fitbounds = "locations", visible = False) # Maps shapefile boundary locations from geojson
-    trace3.update_traces(marker_line_color = "white", marker_line_width=1.5)
+    trace3.update_traces(marker_line_color = 'white', marker_line_width=1.5)
     trace3.layout.update(
-        width = 800, height = 600,
+        width = 900, height = 350,
         paper_bgcolor = colors['bg'],
         plot_bgcolor = colors['bg'], 
         margin = {"r":0,"t":10,"l":0,"b":0},
@@ -118,6 +112,20 @@ def isochrone_map(df, geojsonfile):
 
     return trace3
 
-def histogram(variable):
-    hist = sns.distplot(variable)
+def histogram(df, variable):
+    hist = px.histogram(df, x = variable, 
+                        color = "bin_value_bin",
+                        color_discrete_map={'3': '#FFAD05',
+                                            '2': '#FED628',
+                                            '1': '#F1F374',
+                                            '0': '#D6D6CE'},
+                        labels = {'bin_value_bin': ''}
+                        )
+    hist.layout.update(
+        width = 600, height = 300,
+        paper_bgcolor = colors['bg'], 
+        plot_bgcolor = colors['bg'], 
+        font_color = colors['font'])
+    hist.update_yaxes(visible=False)
+    hist.update_xaxes(title=None)
     return hist

@@ -1,9 +1,8 @@
 from dash import Dash, dcc, html, Input, Output
 import utility as ut
-import urllib.request, json 
+import json 
 import pandas as pd
 import dash_bootstrap_components as dbc
-import requests
 import copy as cp
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.FLATLY])
@@ -63,7 +62,7 @@ app.layout = html.Div(children = [
             '''
             Visualize the time-distance coverage of public facilities over 
             socioeconomic data to identify vulnerabilities in the City of Chicago.
-            ''', style = {'margin' : '50px'}
+            ''', style = {'margin' : '50px', 'margin-bottom': '30px'}
             ),
 
             dcc.Dropdown( # Choose Socioeconomic Variable
@@ -84,11 +83,11 @@ app.layout = html.Div(children = [
 
             html.H5( # Count number of facilities
                 id = 'facility-counter',
-                style = {'margin' : '50px', 'margin-bottom': '30px'}
+                style = {'margin-left': '45px', 'margin-bottom': '10px'}
             ),
 
             html.Div( # Display map
-            id = 'hist', style={'margin': '50px'}
+            id = 'hist'
             )
 
         ], className="2 columns",
@@ -106,13 +105,12 @@ app.layout = html.Div(children = [
 
 @app.callback(
     Output(component_id = 'hist', component_property = 'children'),
-    Input(component_id = 'SocEconVar', component_property = 'value'),
-    Input(component_id = 'ProvisionVar', component_property = 'value')
+    Input(component_id = 'SocEconVar', component_property = 'value')
 )
-def update_figure(SocEconValue, ProvisionValue):
-    if ProvisionValue:
+def update_figure(SocEconValue):
+    if SocEconValue:
         socEconData = cleanData[cleanData['SocEconVar'] == SocEconValue]
-        hist = socEconData['value']
+        hist = ut.histogram(socEconData, 'value')
         return [dcc.Graph(figure = hist)]
 
 @app.callback(
@@ -143,7 +141,6 @@ def update_figure(SocEconValue, ProvisionValue):
     global cleanData2
 
     if SocEconValue and ProvisionValue:
-
         socEconData = cleanData[cleanData['SocEconVar'] == SocEconValue]
         provisionsData = cleanData2[cleanData2['type'] == ProvisionValue]
 
@@ -183,6 +180,5 @@ def update_figure(SocEconValue, ProvisionValue):
         return [dcc.Graph(figure = empty_map)]
 
 
-# Runs app from terminal with "python3 app.py". Once you run the map, you can exit with 'ctrl + c'
 if __name__ == '__main__':
-    app.run_server(host='127.0.0.1', port='8090', debug = False) # If there is a port error you can change it to '8080'
+    app.run_server(host='127.0.0.1', port='8090', debug = False) 
