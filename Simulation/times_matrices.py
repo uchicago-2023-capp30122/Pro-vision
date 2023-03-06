@@ -1,12 +1,12 @@
 from datetime import datetime
+import pandas as pd
+from traveltimepy import Location, Coordinates, Property, TravelTimeSdk, Driving
+import json
 
-from traveltimepy import Location, Coordinates, PublicTransport, Property, FullRange, TravelTimeSdk, Driving
 
-
-def get_distances(origins_df, destinations_df, *, \
+def get_distances(prov_data, sei_data, *, \
     dep_time = datetime.now(),
-    lim_time = 14400,
-    mode = 'driving'):
+    lim_time = 3600):
     """
     Uses TravelTime API to get the distances from each community area to each
     provision center.
@@ -20,22 +20,19 @@ def get_distances(origins_df, destinations_df, *, \
     sdk = TravelTimeSdk(app_id = APP_ID, api_key = APP_KEY)
 
 
-    com_areas = origins_df.to_dict(orient = 'records')
-    prov_cens = destinations_df.to_dict(orient = 'records')
+    prov_centers_df = inputs_for_locations(prov_data, sei_data)['prov_centers']
+    com_areas_df = inputs_for_locations(prov_data, sei_data)['com_areas']
+
+    com_areas = com_areas_df.to_dict(orient = 'records')
+    prov_cens = prov_centers_df.to_dict(orient = 'records')
     locations_com = []
     locations_com_traveltime = []
     for com in com_areas:
         com['id'] = com.pop('community_area')
         com['coords'] = {'lat': com['latitude'], 'lng': com['longitude']}
-        del com['GEOID']
         del com['latitude']
         del com['longitude']
         del com['type']
-        del com['value']
-        del com['boundaries']
-        del com['Tensioned']
-        del com['geometry']
-        del com['Prov_within']
         locations_com.append(com)
         locations_com_traveltime.append(\
             Location(id = com['id'], \
@@ -47,9 +44,6 @@ def get_distances(origins_df, destinations_df, *, \
         prov['id'] = prov.pop('ADDRESS')
         prov['coords'] = {'lat': prov['Latitude'], 'lng': prov['Longitude']}
         del prov['type']
-        del prov['Latitude']
-        del prov['Longitude']
-        del prov['coords_geo']
         locations_prov.append(prov)
         locations_prov_traveltime.append(\
             Location(id = prov['id'], \
@@ -57,10 +51,10 @@ def get_distances(origins_df, destinations_df, *, \
                 lat = prov['coords']['lat'], lng = prov['coords']['lng'])))
     
 
-    times = {}
+    times_dict = {}
     for com in locations_com:
         key = com['id']
-        times[key] = sdk.time_filter(\
+        times_dict[key] = sdk.time_filter(\
             locations = locations_com_traveltime + locations_prov_traveltime, \
             search_ids = {com['id']: [prov['id'] for prov in locations_prov]}, \
             departure_time = dep_time, \
@@ -69,8 +63,44 @@ def get_distances(origins_df, destinations_df, *, \
             properties = [Property.TRAVEL_TIME], \
         )
 
-    for com, result in times.items():
+
+    times_list = []
+    for _, com in times_dict.items():
+        for output_com in com:
+            times_list.append(dict(output_com))
+
+
+    times_clean = {}
+    for com in times_list:
+        com_key = com['search_id']
+        dummy_dic = {}
+        for prov in com['locations']:
+            prov_dic = dict(prov)
+            prov_key = prov_dic['id']
+            i = dict(prov_dic['properties'][0])
+            time = i['travel_time']
+            dummy_dic[prov_key] = time
+        times_clean[com_key] = dummy_dic
+
+
+    with open('Times_from_com_areas_to_prov_centers.json', 'w') as outfile:
+        json.dump(times_clean, outfile)
+    
 
 
 
-    # return times   # recall: this is a dictionary, where each com_area name is the key and the value is the list of TravelTime objects with the time dist from this com_area to all police stations 
+
+def inputs_for_locations(prov_centers, com_areas, *, \
+                         prov_serv = 'police_stations', sei_ind = 'homicide in community areas'):
+    """
+    ---
+    """
+
+    prov_centers = prov_centers[prov_centers['type'] == prov_serv] 
+    prov_centers[['Latitude', 'Longitude']] = prov_centers['coords'].apply(\
+        lambda x: pd.Series(str(x).strip('()').split(','))).astype(float)
+
+
+    com_areas = com_areas[com_areas['type'] == sei_ind]
+
+    return {'prov_centers': prov_centers, 'com_areas': com_areas}

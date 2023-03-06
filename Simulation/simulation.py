@@ -48,17 +48,25 @@ class Network(object):
         df.loc[df['value'] >= min(\
             df.nlargest(NUMBER_OF_SEI, 'value')['value']), \
             'Tensioned'] = 1
-        # df_extended = df_extended.merge(\
-        #     com_bounds, how = 'outer', left_on = 'GEOID', right_on = 'geoid10')
-        # df_extended.drop('geoid10', axis = 1, inplace = True)
+
         df['geometry'] = df['boundaries'].apply(lambda x: wkt.loads(x))
         df['Prov_within'] = df['geometry'].apply(\
             lambda x: 1 if utils.point_in_area(self.prov_centers['coords_geo'], x) else 0)     # Bug: doesn't read utils.py
         
-        # Include 1 col for each pol station, to have the distance between this and the com_area
-        # f = pd.DataFrame.from_dict(n, orient = 'index')
+
+        # Open JSON
+        f = open('Times_from_com_areas_to_prov_centers.json')
+        times_dict = json.load(f)
+        times_df = pd.DataFrame.from_dict(times_dict, orient = 'index')
+        num_prov_centers = len(times_df)
+        times_df['names'] = times_df.index
         
-        df['Min_dist'] = df[[]].apply(min, axis = 1)  # Complete with the missing cols
+        # Merge with df
+        df = df.merge(\
+            times_df, how = 'outer', left_on = 'community_area', right_on = 'names')
+        df.drop('names', axis = 1, inplace = True)
+
+        df['Min_dist'] = df[df.columns[-num_prov_centers:]].apply(min, axis = 1)  # ALTERNATIVE: df['Min_dist'] = df[[]].min(axis = 1)
         self.df = df.copy(deep = True)
   
         table_statu_quo = df[df['Tensioned'] == 1]
