@@ -6,24 +6,32 @@ colors = {
     'font': '#767676', # Dark Gray
     'marker': '#800000', # Maroon
     'coverage': 'rgba(128,0,0,0.3)', # Maroon with some transparency
-    'default': '#D6D6CE', # Light Gray
+    'default': '#D6D6CE' # Light Gray
 }
 
 def empty_map(df, geojsonfile):
+    '''
+    Sets default choropleth map
+
+    Input:
+        - df (pd): Dataframe 
+        - geojsonfile: GEOJSON
+
+    Return: Choropleth map
+    '''
 
     df.sort_values("geoid10", inplace=True)
     df.drop_duplicates(subset=['geoid10'])
 
-    #------- EMPTY CHOROPLETH MAP -------#
     trace0 = px.choropleth(
-            df, # Socioeconomic data
-            geojson = geojsonfile, # Mapping geoJson
-            locations = 'geoid10', # Identifies locations from geojson
-            featureidkey = "properties.geoid10", # Consider pri_neigh as key from geojson dictionary
+            df, 
+            geojson = geojsonfile, 
+            locations = 'geoid10', 
+            featureidkey = "properties.geoid10", 
             color_discrete_sequence = [colors['default']],
-            projection = "gnomonic" # mercator, orthographic, azimuthal equal area, azimuthal equidistant, gnomonic, mollweide
+            projection = "gnomonic"
             )
-    trace0.update_geos(fitbounds = "locations", visible = False) # Maps shapefile boundary locations from geojson
+    trace0.update_geos(fitbounds = "locations", visible = False)
     trace0.update_traces(marker_line_color = "white", marker_line_width=0.5)
     trace0.layout.update(
         width = 800, height = 600,
@@ -34,22 +42,29 @@ def empty_map(df, geojsonfile):
     return trace0
 
 def socioeconomic_map(df, geojsonfile):
-    #------- CHOROPLETH MAP TO DISPLAY SOCIOECONOMIC VARIABLE -------#
+    '''
+    Generates choropleth map for the socioeconomic variable
+
+    Input:
+        - df (pd): Dataframe 
+        - geojsonfile: GEOJSON
+
+    Return: Choropleth map
+    '''
     trace1 = px.choropleth(
-            df, # Socioeconomic data
-            geojson = geojsonfile, # Mapping geoJson
+            df,
+            geojson = geojsonfile, 
             color = "bin_value_bin",
-            #color_continuous_scale = 'Aggrnyl', # Choosing color
             color_discrete_map={'3': '#FFAD05',
                                 '2': '#FED628',
                                 '1': '#F1F374',
                                 '0': '#D6D6CE'},
             labels = {'bin_value_bin': ''},
-            locations = 'geoid10', # Identifies locations from geojson
-            featureidkey = "properties.geoid10", # Consider pri_neigh as key from geojson dictionary
+            locations = 'geoid10', 
+            featureidkey = "properties.geoid10", 
             projection = 'gnomonic'
             )
-    trace1.update_geos(fitbounds = "locations", visible = False) # Maps shapefile boundary locations from geojson
+    trace1.update_geos(fitbounds = "locations", visible = False)
     trace1.update_traces(marker_line_color = "white", marker_line_width = 0.5)
     trace1.layout.update(
         legend = dict(y=0.9, x=0.8),
@@ -59,13 +74,21 @@ def socioeconomic_map(df, geojsonfile):
             ),
         font_color = colors['font'],
         width = 800, height = 600,
-        margin = {"r":0,"t":10,"l":0,"b":0}, # Sets boundaries of map
-        showlegend = True # Show legend
+        margin = {"r":0,"t":10,"l":0,"b":0}, 
+        showlegend = True
         )
     return trace1
 
 def facilities_map(df, geojsonfile):
-    #------- SCATTER MAP FOR PUBLIC SERVICES/PROVISIONS -------#
+    '''
+    Generates scatter geo map for the Public Facility
+
+    Input:
+        - df (pd): Dataframe 
+        - geojsonfile: GEOJSON
+
+    Return: Choropleth map
+    '''
     trace2 = px.scatter_geo(df,
                             lat = 'latitude', lon = 'longitude', 
                             geojson = geojsonfile,
@@ -80,27 +103,33 @@ def facilities_map(df, geojsonfile):
     trace2.update_traces(marker_line_color = "white", marker_line_width=0.5)
     trace2.layout.update(
         width = 800, height = 600,
-        paper_bgcolor = colors['bg'], # Sets transparent background
-        plot_bgcolor = colors['bg'], # Sets transparent background
-        font_color = colors['font'], # Sets font color
-        margin = {"r":0,"t":10,"l":0,"b":0} # Sets boundaries of map
+        paper_bgcolor = colors['bg'], 
+        plot_bgcolor = colors['bg'],
+        font_color = colors['font'], 
+        margin = {"r":0,"t":10,"l":0,"b":0} 
         )
 
     return trace2
 
 def isochrone_map(df, geojsonfile):
+    '''
+    Generates isochrone map as a choropleth to trace boundaries
 
-    #------- ISOCHRONE MAP -------#
+    Input:
+        - df (pd): Dataframe 
+        - geojsonfile: GEOJSON
+
+    Return: Choropleth map
+    '''
     trace3 = px.choropleth(
-            df, # Socioeconomic data
-            geojson = geojsonfile, # Mapping geoJson
+            df,
+            geojson = geojsonfile, 
             locations = 'full_address',
-            featureidkey = "properties.full_address", # Consider pri_neigh as key from geojson dictionary
-            #color = 'coords',
-            color_discrete_sequence = [colors['bg']], #for _ in df['full_address']],
+            featureidkey = "properties.full_address", 
+            color_discrete_sequence = [colors['bg']], 
             projection = "gnomonic" 
             )
-    trace3.update_geos(fitbounds = "locations", visible = False) # Maps shapefile boundary locations from geojson
+    trace3.update_geos(fitbounds = "locations", visible = False) 
     trace3.update_traces(marker_line_color = 'black', marker_line_width=0.5)
     trace3.layout.update(
         width = 900, height = 350,
@@ -113,6 +142,15 @@ def isochrone_map(df, geojsonfile):
     return trace3
 
 def histogram(df, variable):
+    '''
+    Generates histogram for the socioeconomic variable
+
+    Input:
+        - df (pd): Dataframe 
+        - variable (str): Selected socioeconomic variable
+
+    Return: Histogram
+    '''
     hist = px.histogram(df, x = variable, 
                         color = "bin_value_bin",
                         color_discrete_map={'3': '#FFAD05',
@@ -128,4 +166,5 @@ def histogram(df, variable):
         font_color = colors['font'])
     hist.update_yaxes(visible=False)
     hist.update_xaxes(title=None)
+    
     return hist
