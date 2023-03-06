@@ -1,14 +1,27 @@
-from dash import Dash, dcc, html, Input, Output 
+from dash import Dash, dcc, html, Input, Output, dash_table
 import utility as ut # Graph functions
 import json
 import pandas as pd 
 import dash_bootstrap_components as dbc # Template
 import copy as cp
-import numpy as np
-import plotly.express as px
-from PIL import Image
+#import numpy as np
+#import plotly.express as px
+#import base64
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.FLATLY])
+
+lst = ['Humboldt Park',
+ 'Austin',
+ 'West Garfield Park',
+ 'North Lawndale',
+ 'South Shore',
+ 'Roseland',
+ 'West Englewood',
+ 'Englewood',
+ 'Greater Grand Crossing',
+ 'Auburn Gresham']
+datatable_dict = {'name': lst, 'height': [0,9,8,7,6,5,4,3,2,1]}
+datatable_df = pd.DataFrame.from_dict(datatable_dict)
 
 #------- GEOJSON CENSUS TACTS OF THE CITY OF CHICAGO -------#
 with open("Boundaries - Census Tracts - 2010.geojson") as gjs:
@@ -159,39 +172,41 @@ simulation_page = html.Div(children = [
     html.Div([
 
         html.Div([
-     
             html.Div( # Display network map
-                id = 'network', style = {'height': '50%', 'width': '50%',
-                                         'margin-left': '50px'}
+                id = 'network', style = {'margin-top': '30px', 'margin-left': '220px',
+                                         'height': '35%'}
             ),
-
-            html.Div( # Display table
-                id = 'table'
-            )
-
         ], style = {'width': '65%', 'display': 'inline-block'}),
 
         html.Div([
      
             dcc.RadioItems( # Node categories
                 options=[
+                    {'label': 'Reset', 'value': 'reset'},
                     {'label': 'Tensioned Community Area', 'value': 'TCA'},
                     {'label': 'Provision within Community Area', 'value': 'PCA'},
                 ],
-                value='network-buttons',
+                value = 'reset',
+                id = 'network_button',
                 style = {'margin-left': '20px', 'margin-bottom': '30px'}
             ),
 
-            html.Div([], style = {'margin-bottom': '100px'}), # Space
+            html.Div([], style = {'margin-bottom': '10px'}), # Space
             
             dcc.Dropdown( # Shock sources
                 ['Reset', 'Change in Tensioned Community Areas', 'Reduction in Public Provision'],
                 placeholder = 'Select a shock source',
                 searchable = False,
+                value = 'Reset',
                 id = 'shock',
                 style = {'margin-left': '20px', 'margin-bottom': '30px'}
             )
-        ], style = {'width': '25%', 'display': 'inline-block'})
+            ], style = {'width': '25%', 'display': 'inline-block',
+                    'margin-bottom': '20px'}),
+
+            html.Div( # Display table
+                id = 'table'
+            )
 
         ], 
         className="row"
@@ -199,7 +214,6 @@ simulation_page = html.Div(children = [
 ])
 
 app.layout = html.Div([dcc.Location(id="url"), sidebar, content])
-
 
 @app.callback( # Callback sidebar page
     Output("page-content", "children"), 
@@ -210,6 +224,7 @@ def render_page_content(pathname):
         return map_page
     elif pathname == "/simulation":
         return simulation_page
+    # Default from: https://dash-bootstrap-components.opensource.faculty.ai/examples/simple-sidebar/
     return html.Div(
         [
             html.H1("404: Not found", className="text-danger"),
@@ -263,7 +278,7 @@ def update_counter(ProvisionValue):
     Input(component_id = 'SocEconVar', component_property = 'value'),
     Input(component_id = 'ProvisionVar', component_property = 'value')
 )
-def update_figure(SocEconValue, ProvisionValue):
+def update_main_map(SocEconValue, ProvisionValue):
     '''
     Display the GEOJSON map of chicago with socioeconomic data, public facility data
         and coverage data (Isochrone GEOJSON)
@@ -322,20 +337,39 @@ def update_figure(SocEconValue, ProvisionValue):
     
 @app.callback( # Callback network image
     Output(component_id = 'network', component_property = 'children'),
-    [Input(component_id = 'network-buttons', component_property = 'value')]
+    Input(component_id = 'network_button', component_property = 'value'),
 )
-def update_network(network_category):
-    print(network_category)
-    if network_category == "TCA":
-        img = Image.open("dummy1.jpg")
-        return html.Img(src = img)
-    elif network_category == "PCA":
-        img = Image.open("dummy2.jpg")
-        return html.Img(src = img)
-    else:
-        img = Image.open("network_shock_com.png")
-        return html.Img(src = img)
+def update_network(network_button):
 
-
+    if network_button == "TCA":
+        image_filename = "network30000.png"
+        return html.Img(src=app.get_asset_url(image_filename),
+                        style={'height':'220%'})
+    elif network_button == "PCA":
+        image_filename = "network0.png"
+        return html.Img(src=app.get_asset_url(image_filename),
+                        style={'height':'220%'})
+    elif network_button == "reset":
+        image_filename = "network_shock_com.png"
+        return html.Img(src=app.get_asset_url(image_filename),
+                        style={'height':'220%'})
+    
+@app.callback( # Callback dataTable
+    Output(component_id = 'table', component_property = 'children'),
+    Input(component_id = 'shock', component_property = 'value'),
+)
+def update_table(shock):
+    if shock == 'Reset':
+        return dash_table.DataTable(
+            data = datatable_df.to_dict('records'),
+            columns = [{'id': c, 'name': c} for c in datatable_df.columns],
+            fixed_rows={'headers': True},
+            style_table={'margin-top': '30px'}
+        )
+    elif shock == 'Change in Tensioned Community Areas':
+        return 'Nothing'
+    elif shock == 'Reduction in Public Provision':
+        return 'More of nothing'
+    
 if __name__ == '__main__':
     app.run_server(host='127.0.0.1', port='8090', debug = False) 
