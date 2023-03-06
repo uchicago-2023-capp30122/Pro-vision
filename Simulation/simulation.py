@@ -351,9 +351,12 @@ def ui_shock(network, shock_source = 'Reset'):
 
     if shock_source == 'Change in Tensioned Community Areas':
         network.apply_shock_com_areas()
+        return network.table_shock_com
     elif shock_source == 'Reduction in Public Provision':
         network.apply_shock_prov_centers()
-
+        return network.table_shock_prov
+    else:
+        return network.table_statu_quo
 
 
 
