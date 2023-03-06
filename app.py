@@ -4,6 +4,9 @@ import json
 import pandas as pd 
 import dash_bootstrap_components as dbc # Template
 import copy as cp
+import numpy as np
+import plotly.express as px
+from PIL import Image
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.FLATLY])
 
@@ -36,9 +39,8 @@ navbar = dbc.Navbar(
                 dbc.Row(
                     [
                         dbc.Col(html.Img(src=UChi_logo, height="30px")), # Logo
-                        dbc.Col(dbc.NavbarBrand("Pro-Vision")), # Team name
                     ],
-                    align="center",
+                    align="left",
                 ),
                 href="#",
                 style={"textDecoration": "none"},
@@ -49,8 +51,45 @@ navbar = dbc.Navbar(
     dark = True,
 )
 
-#------- DASHBOARD STRUCTURE -------#
-app.layout = html.Div(children = [
+# Sidebar structure code from: https://dash-bootstrap-components.opensource.faculty.ai/examples/simple-sidebar/
+SIDEBAR_STYLE = {
+    "position": "fixed",
+    "top": 0,
+    "left": 0,
+    "bottom": 0,
+    "width": "14rem",
+    "padding": "2rem 1rem",
+    "background-color": "#D6D6CE",
+    "font-color": "#000000"
+}
+
+CONTENT_STYLE = {
+    "margin-left": "14rem",
+}
+
+sidebar = html.Div(
+    [
+        html.H2("Pro-Vision", className="display-4", style={'font-size': '35px'}),
+        html.Hr(),
+        html.P(
+            "CAPP30122 Project", className="lead"
+        ),
+        dbc.Nav(
+            [
+                dbc.NavLink("Map", href="/", active="exact"),
+                dbc.NavLink("Simulation", href="/simulation", active="exact"),
+            ],
+            vertical=True,
+            pills=True,
+        ),
+    ],
+    style = SIDEBAR_STYLE,
+)
+
+content = html.Div(id="page-content", style=CONTENT_STYLE)
+
+#------- MAP PAGE -------#
+map_page = html.Div(children = [
     navbar, # Navigation bar
 
     html.Div([]), # Space
@@ -101,8 +140,84 @@ app.layout = html.Div(children = [
         ], 
         className="row"
     )
-
 ])
+
+#------- SIMULATION PAGE -------#
+simulation_page = html.Div(children = [
+    navbar, # Navigation bar
+
+    html.Div([]), # Space
+
+    html.H5( # Main description
+            '''
+            Simulate shocks either in the community areas' ranking for homicide
+            rate and in the amount of functioning police stations to identify the 
+            degree of resilience of the current provision network in Chicago.  
+            ''', style = {'margin' : '50px', 'margin-bottom': '30px'}
+            ),
+    
+    html.Div([
+
+        html.Div([
+     
+            html.Div( # Display network map
+                id = 'network', style = {'height': '50%', 'width': '50%',
+                                         'margin-left': '50px'}
+            ),
+
+            html.Div( # Display table
+                id = 'table'
+            )
+
+        ], style = {'width': '65%', 'display': 'inline-block'}),
+
+        html.Div([
+     
+            dcc.RadioItems( # Node categories
+                options=[
+                    {'label': 'Tensioned Community Area', 'value': 'TCA'},
+                    {'label': 'Provision within Community Area', 'value': 'PCA'},
+                ],
+                value='network-buttons',
+                style = {'margin-left': '20px', 'margin-bottom': '30px'}
+            ),
+
+            html.Div([], style = {'margin-bottom': '100px'}), # Space
+            
+            dcc.Dropdown( # Shock sources
+                ['Reset', 'Change in Tensioned Community Areas', 'Reduction in Public Provision'],
+                placeholder = 'Select a shock source',
+                searchable = False,
+                id = 'shock',
+                style = {'margin-left': '20px', 'margin-bottom': '30px'}
+            )
+        ], style = {'width': '25%', 'display': 'inline-block'})
+
+        ], 
+        className="row"
+    )
+])
+
+app.layout = html.Div([dcc.Location(id="url"), sidebar, content])
+
+
+@app.callback( # Callback sidebar page
+    Output("page-content", "children"), 
+    [Input("url", "pathname")]
+)
+def render_page_content(pathname):
+    if pathname == "/":
+        return map_page
+    elif pathname == "/simulation":
+        return simulation_page
+    return html.Div(
+        [
+            html.H1("404: Not found", className="text-danger"),
+            html.Hr(),
+            html.P(f"The pathname {pathname} was not recognised..."),
+        ],
+        className="p-3 bg-light rounded-3",
+    )
 
 @app.callback( # Callback histogram
     Output(component_id = 'hist', component_property = 'children'),
@@ -204,6 +319,22 @@ def update_figure(SocEconValue, ProvisionValue):
         empty_map = ut.empty_map(cleanData, chicagoMap) # Set empty map
 
         return [dcc.Graph(figure = empty_map)]
+    
+@app.callback( # Callback network image
+    Output(component_id = 'network', component_property = 'children'),
+    [Input(component_id = 'network-buttons', component_property = 'value')]
+)
+def update_network(network_category):
+    print(network_category)
+    if network_category == "TCA":
+        img = Image.open("dummy1.jpg")
+        return html.Img(src = img)
+    elif network_category == "PCA":
+        img = Image.open("dummy2.jpg")
+        return html.Img(src = img)
+    else:
+        img = Image.open("network_shock_com.png")
+        return html.Img(src = img)
 
 
 if __name__ == '__main__':
