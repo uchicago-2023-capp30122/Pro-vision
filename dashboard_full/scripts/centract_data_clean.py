@@ -50,14 +50,22 @@ def bin_centract(dataframe, path_bounds, indicator_vars):
     bin_vars = []
     for indicator in indicator_vars:
         var_name = "bin_" + indicator
-        dataframe[var_name] = pd.qcut(
+        _, bound_bins = pd.qcut(
             dataframe[indicator],
-            q=5,
+            q=4,
+            retbins= True,
             labels=None,
             duplicates="drop",
         )
+        bin_labels = [f'Q{i+1}' for i in range(len(bound_bins)-1)]
+        dataframe[var_name] = pd.qcut(
+            dataframe[indicator],
+            q=4,
+            labels=bin_labels,
+            duplicates="drop",
+        )
         bin_vars.append(var_name)
-    dataframe_shape = pd.merge(dataframe, cendata, on="GEOID", suffixes=('', '_y'))
+    dataframe_shape = pd.merge(dataframe, cendata, on="GEOID")
     return dataframe_shape, bin_vars
 
 
