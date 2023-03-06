@@ -6,7 +6,7 @@ import json
 
 def get_distances(prov_data, sei_data, *, \
     dep_time = datetime.now(),
-    lim_time = 3600):
+    lim_time = 14400):
     """
     Uses TravelTime API to get the distances from each community area to each
     provision center.
@@ -83,7 +83,7 @@ def get_distances(prov_data, sei_data, *, \
         times_clean[com_key] = dummy_dic
 
 
-    with open('Times_from_com_areas_to_prov_centers.json', 'w') as outfile:
+    with open('Dist_from_com_areas_to_prov_centers.json', 'w') as outfile:
         json.dump(times_clean, outfile)
     
 

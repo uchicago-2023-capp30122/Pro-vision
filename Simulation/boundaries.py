@@ -1,35 +1,35 @@
 
 
 
-###### SOURCE: https://pro.arcgis.com/en/pro-app/latest/tool-reference/analysis/polygon-neighbors.htm #####
+# ###### SOURCE: https://pro.arcgis.com/en/pro-app/latest/tool-reference/analysis/polygon-neighbors.htm #####
 
-import arcpy
+# import arcpy
 
-arcpy.management.MakeFeatureLayer(r"C:\Data\Canada\CanadaElecDist.shp", 
-                                  "Canada_ElectoralDist")
+# arcpy.management.MakeFeatureLayer(r'geo_export_5ab6c12d-87d2-40fb-b75d-685ad830e658.shp', 
+#                                   'Chicago_com_areas_boundaries')
 
-arcpy.management.SelectLayerByAttribute("Canada_ElectoralDist", "NEW_SELECTION", 
-                                        "\"PROVCODE\" = 'NS'")
-count = arcpy.management.GetCount("Canada_ElectoralDist")[0]
-print("Selected feature count: {}".format(count))
+# arcpy.management.SelectLayerByAttribute("Chicago_com_areas_boundaries", "NEW_SELECTION", 
+#                                         "\"PROVCODE\" = 'NS'")
+# count = arcpy.management.GetCount("Chicago_com_areas_boundaries")[0]
+# print("Selected feature count: {}".format(count))
 
-arcpy.analysis.PolygonNeighbors("Canada_ElectoralDist", 
-                                r"C:\Data\Output\NS_elec_neigh.dbf", "ENNAME")
-print(arcpy.GetMessages())
+# arcpy.analysis.PolygonNeighbors("Canada_ElectoralDist", 
+#                                 r"\home\angelrodriguezg\capp30122\Pro-Vision\Simulation\NS_elec_neigh.dbf", "ENNAME")
+# print(arcpy.GetMessages())
 
 
 
 
 
 ###### SETU #######
-from arcgis.gis import GIS
+# from arcgis.gis import GIS
 from arcgis.features import FeatureLayer
 
 # Connect to your ArcGIS Online organization or Portal for ArcGIS
-gis = GIS("https://www.arcgis.com", "username", "password")
+gis = GIS("https://www.arcgis.com", "Angel_Rodriguez_LearnArcGIS", "Aa12351417##")
 
 # Specify the feature layer containing the polygons
-layer_url = "https://services.arcgis.com/{your-org-id}/arcgis/rest/services/{your-layer-name}/FeatureServer/0"
+layer_url = "https://services.arcgis.com/Angel_Rodriguez_LearnArcGIS/arcgis/rest/services/{your-layer-name}/FeatureServer/0"
 layer = FeatureLayer(layer_url, gis=gis)
 
 # Define the query to retrieve the polygon of interest

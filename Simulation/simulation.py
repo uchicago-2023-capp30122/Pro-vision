@@ -31,7 +31,7 @@ class Network(object):
         prov_centers[['Latitude', 'Longitude']] = prov_centers['coords'].apply(\
             lambda x: pd.Series(str(x).strip('()').split(','))).astype(float)
         prov_centers['coords'] = prov_centers[['Latitude', 'Longitude']].apply(tuple, axis=1)
-        prov_centers['coords'] = prov_centers['coords'].apply(utils.switch_tuple_order)    # Bug: doesn't read utils.py
+        prov_centers['coords'] = prov_centers['coords'].apply(switch_tuple_order)    # Bug: doesn't read utils.py
         prov_centers['coords_geo'] = gpd.GeoSeries(prov_centers['coords'].apply(\
             lambda x: geometry.Point(x)))
         self.prov_centers = prov_centers.copy(deep = True)
@@ -51,14 +51,14 @@ class Network(object):
 
         df['geometry'] = df['boundaries'].apply(lambda x: wkt.loads(x))
         df['Prov_within'] = df['geometry'].apply(\
-            lambda x: 1 if utils.point_in_area(self.prov_centers['coords_geo'], x) else 0)     # Bug: doesn't read utils.py
+            lambda x: 1 if point_in_area(self.prov_centers['coords_geo'], x) else 0)     # Bug: doesn't read utils.py
         
 
         # Open JSON
-        f = open('Times_from_com_areas_to_prov_centers.json')
+        f = open('Dist_from_com_areas_to_prov_centers.json')   # Problem: The minimum I run it with was 1h......
         times_dict = json.load(f)
         times_df = pd.DataFrame.from_dict(times_dict, orient = 'index')
-        num_prov_centers = len(times_df)
+        num_prov_centers = len(times_df.columns)
         times_df['names'] = times_df.index
         
         # Merge with df
@@ -66,9 +66,10 @@ class Network(object):
             times_df, how = 'outer', left_on = 'community_area', right_on = 'names')
         df.drop('names', axis = 1, inplace = True)
 
-        df['Min_dist'] = df[df.columns[-num_prov_centers:]].apply(min, axis = 1)  # ALTERNATIVE: df['Min_dist'] = df[[]].min(axis = 1)
+        df['Min_dist'] = df[df.columns[-num_prov_centers:]].min(axis = 1).apply(lambda x: round(x/60,3))
         self.df = df.copy(deep = True)
   
+
         table_statu_quo = df[df['Tensioned'] == 1]
         self.table_statu_quo = table_statu_quo[['community_area', 'Min_dist']]
 
@@ -85,12 +86,18 @@ class Network(object):
         Returns
         """
 
-        
-        list_of_neighbours = list(output_from_API_as_df[['src_MyCode', 'nbr_MyCode']].itertuples(index = False, name = None))
+        pairs = pd.read_csv('Pairs_vf.csv', sep = '\0') 
+        pairs[['Origin', 'Destination']] = pairs['Pairs'].apply(\
+            lambda x: pd.Series(str(x).strip('()').split(',')))
+        pairs['Pairs'] = pairs[['Origin', 'Destination']].apply(tuple, axis=1)
+
+
+
+        # list_of_neighbours = list(output_from_API_as_df[['src_MyCode', 'nbr_MyCode']].itertuples(index = False, name = None))
             # The output of this is a list of tuples, where each tuple is a pair of neighbours
         
 
-        G = nx.Graph(list_of_neighbours)
+        G = nx.Graph(pairs['Pairs'])
             # The output of this is the adjacency graph: nodes and edges.
             # Alternative: 1- Create void graph, 2- Graph.add_nodes_from(df['Name'], **attr)
         
@@ -98,7 +105,7 @@ class Network(object):
         attrs = {}   # This can be done without a for loop
         for _, com in self.df.iterrows():
             label = {'Tensioned': com['Tensioned'], 'Prov_within': com['Prov_within']}
-            key = com['Name']
+            key = com['community_area']
             attrs[key] = label
 
         nx.set_node_attributes(G, attrs)    
@@ -134,7 +141,7 @@ class Network(object):
         shock_rows = np.random.choice(\
             self.df_shock_com.index, size = 10, replace = False)
         self.df_shock_com.loc[shock_rows, 'Tensioned_sim'] = 1
-        self.df_shock_com['Min_dist_shock'] = self.df_shock_com[[]].apply(min, axis = 1)  # Complete with the missing cols
+        # self.df_shock_com['Min_dist_shock'] = self.df_shock_com[[]].apply(min, axis = 1)  # Complete with the missing cols    # Why did I write this??
 
 
         # Modifies the graph label
@@ -142,7 +149,7 @@ class Network(object):
         attrs = {}   # Probably to a helper function (if we maintain the for loop)
         for _, com in self.df_shock_com.iterrows():
             label = {'Tensioned': com['Tensioned_sim'], 'Prov_within': com['Prov_within']}
-            key = com['Name']
+            key = com['community_area']
             attrs[key] = label
 
         nx.set_node_attributes(G_shock_com, attrs)
@@ -156,7 +163,7 @@ class Network(object):
 
 
         table_shock_com = self.df_shock_com[self.df_shock_com['Tensioned_sim'] == 1]
-        self.table_shock_com = table_shock_com[['Name', 'Min_dist_shock']]
+        self.table_shock_com = table_shock_com[['community_area', 'Min_dist']]
 
         # return {'df': self.df_shock_com, 'graph': G_shock_com}
 
@@ -172,7 +179,7 @@ class Network(object):
         """
 
         self.df_shock_prov = self.df.copy(deep = True)
-        prov_centers_all = list(self.df.columns.values)  # Warning: not all cols, only the prov
+        prov_centers_all = list(self.df.columns[-23:].values)  # Warning: not all cols, only the prov
         prov_centers_shock = random.sample(prov_centers_all, \
                                            round(len(self.prov_centers)*(1-reduction)))
 
@@ -188,7 +195,7 @@ class Network(object):
         attrs = {}   # Probably to a helper function (if we maintain the for loop)
         for _, com in self.df_shock_prov.iterrows():
             label = {'Tensioned': com['Tensioned'], 'Prov_within': com['Prov_within_shock']}
-            key = com['Name']
+            key = com['community_area']
             attrs[key] = label
 
         nx.set_node_attributes(G_shock_prov, attrs)  
@@ -220,3 +227,31 @@ def ui_shock(network, shock_source = 'Reset'):
         network.apply_shock_com_areas()
     elif shock_source == 'Reduction in Public Provision':
         network.apply_shock_prov_centers()
+
+
+
+
+
+
+############################ For utils.py ######################################
+
+
+def point_in_area(points, polygon):
+    """
+    Verifies whether a point in a given set is geographically within an area.
+    Parameters:
+    Returns
+    """
+
+    for p in points:
+        if p.within(polygon):
+            return True
+    return False 
+
+
+
+def switch_tuple_order(tup):
+    """
+    ---
+    """
+    return (tup[1], tup[0])
