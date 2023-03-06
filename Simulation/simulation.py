@@ -333,7 +333,7 @@ class Network(object):
         table_shock_prov = self.df_shock_prov[\
             self.df_shock_prov['Tensioned_sim'] == 1]
         table_shock_prov = table_shock_prov.rename(columns = \
-            {'community_area': 'Community area', 'Min_dist': 'Min. distance'})
+            {'community_area': 'Community area', 'Min_dist_shock': 'Min. distance'})
         self.table_shock_prov = table_shock_prov[['Community area', 'Min. distance']]
 
 
