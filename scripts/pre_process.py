@@ -1,5 +1,4 @@
 import pandas as pd
-#from .geo_code import *
 from .community_data_clean import *
 from .centract_data_clean import *
 from .geo_api import *
@@ -76,17 +75,3 @@ def isochrone_json():
     for prov, geoj in merged_geo.items():
         combined_geoj[prov] = geojson.FeatureCollection(geoj)
     return combined_geoj
-
-
-# def add_isochrones():
-#     """
-#     Takes cleaned data for provisions and returns isochrones for these
-#     provisions
-#     """
-#     prov_data = get_clean_prov()
-#     # prov_data['isochrones'] = prov_data['coords'].apply(isochrone, args= prov_data["full_address"])
-    # prov_data["isochrones"] = prov_data.apply(
-    #     lambda row: isochrone(row["coords"], row["full_address"]),
-    #     axis= 1
-    # )
-#     return prov_data

@@ -1,11 +1,19 @@
 import pandas as pd
 import geopandas as gpd
 
+
 def pre_clean_centract(path_sei, path_bounds):
-    '''
+    """
     Makes cosmetic changes to socio economic indicator data and census tract
     boundary data
-    '''
+
+    Inputs:
+    path_sei: path to raw socio-economic indicator data
+    path_bounds: path to raw geospatial census tract boundary data
+
+    Output:
+    A pandas dataframe
+    """
     dataframe = pd.read_csv(path_sei)
     dataframe = dataframe.drop(["Layer", "Name"], axis=1)
     cendata = gpd.read_file(path_bounds)
@@ -22,28 +30,50 @@ def pre_clean_centract(path_sei, path_bounds):
     )
     return dataframe
 
+
 def bin_centract(dataframe, path_bounds, indicator_vars):
-    '''
+    """
     Creates bins for values pertaining to socio-economic indicators for
     census tracts
-    '''
+    Inputs:
+    dataframe: a Pandas dataframe
+    path_bounds: path to census tract boundaries
+    indicator_vars: list of relevant socio-economic indicators
+
+    Output:
+    dataframe with binned data
+    list of bin variable names
+    """
     cendata = gpd.read_file(path_bounds)
     bin_vars = []
     for indicator in indicator_vars:
         var_name = "bin_" + indicator
-        #UPDATE LABELS HEREEEEE!!!!
         dataframe[var_name] = pd.qcut(
-            dataframe[indicator], q=4, labels=False, duplicates="drop"
+            dataframe[indicator],
+            q=4,
+            labels=[
+                "Fourth Quartile",
+                "Third Quartile",
+                "Second Quartile",
+                "First Quartile",
+            ],
+            duplicates="drop",
         )
         bin_vars.append(var_name)
     dataframe_shape = pd.merge(dataframe, cendata, on="GEOID")
     return dataframe_shape, bin_vars
 
+
 def reshape_data(merged_data, indicator_vars, bin_vars):
-    '''
+    """
     takes merged data of census tract level socio economic indicators and
     boundaries and reshapes it to make it filterable
-    '''
+
+    Inputs:
+    merged_data: a Pandas dataframe
+    indicator_vars: list of relevant socio-economic indicators
+    bin_vars: list of bin variable names
+    """
     df_melt = pd.melt(
         merged_data,
         id_vars=["GEOID", "Longitude", "Latitude", "geometry"],
