@@ -2,6 +2,7 @@ import pandas as pd
 from .community_data_clean import *
 from .centract_data_clean import *
 from .geo_api import *
+import geojson
 
 indicator_vars = [
     "Uninsured rate (% of residents), 2015-2019",
@@ -29,9 +30,9 @@ def get_clean_prov():
     list_cols = ["ADDRESS", "CITY", "STATE", "ZIP", "LOCATION"]
     dict_provision = clean_prov(list_cols, path)
     provisions = pd.concat(dict_provision.values())
-    provisions = provisions.assign(row_number = range(len(provisions)))
-    provisions['row_number'] = provisions['row_number'].astype(str)
-    provisions['isoID'] = provisions['type'] + provisions['row_number']
+    provisions = provisions.assign(row_number=range(len(provisions)))
+    provisions["row_number"] = provisions["row_number"].astype(str)
+    provisions["isoID"] = provisions["type"] + provisions["row_number"]
     return provisions
 
 
@@ -49,32 +50,33 @@ def get_clean_community_sei():
     return sei_cleaned
 
 
-def get_clean_centract_sei():
+def get_clean_centract_sei(indicator_vars):
     """
     Returns clean census-tract level Socio-Economic indicator data
     """
     path_sei = "raw_data/centract/sei_centract.csv"
     path_bounds = "raw_data/Boundaries - Census Tracts - 2010.geojson"
     centract = pre_clean_centract(path_sei, path_bounds)
-    wide_centract, bin_vars = bin_centract(centract, indicator_vars)
+    wide_centract, bin_vars = bin_centract(centract, path_bounds, indicator_vars)
     final_centract = reshape_data(wide_centract, indicator_vars, bin_vars)
     return final_centract
 
+
 def isochrone_add():
-    '''
+    """
     Add isochrones to cleaned provision data
-    '''
+    """
     prov_data = get_clean_prov()
     prov_data["isochrones"] = prov_data.apply(
-        lambda row: get_isochrones(row["coords"], row["type"]),
-        axis= 1
+        lambda row: get_isochrones(row["coords"], row["type"]), axis=1
     )
     return prov_data
 
+
 def isochrone_json():
-    '''
+    """
     convert isochrones to a json file
-    '''
+    """
     combined_geoj = {}
     iso_data = isochrone_add()
     merged_geo = merge_geojson(iso_data)

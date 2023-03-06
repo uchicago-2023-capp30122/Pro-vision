@@ -45,22 +45,19 @@ def bin_centract(dataframe, path_bounds, indicator_vars):
     list of bin variable names
     """
     cendata = gpd.read_file(path_bounds)
+    cendata.rename(columns={"geoid10": "GEOID"}, inplace=True)
+    cendata["GEOID"] = cendata["GEOID"].astype(int)
     bin_vars = []
     for indicator in indicator_vars:
         var_name = "bin_" + indicator
         dataframe[var_name] = pd.qcut(
             dataframe[indicator],
-            q=4,
-            labels=[
-                "Fourth Quartile",
-                "Third Quartile",
-                "Second Quartile",
-                "First Quartile",
-            ],
+            q=5,
+            labels=None,
             duplicates="drop",
         )
         bin_vars.append(var_name)
-    dataframe_shape = pd.merge(dataframe, cendata, on="GEOID")
+    dataframe_shape = pd.merge(dataframe, cendata, on="GEOID", suffixes=('', '_y'))
     return dataframe_shape, bin_vars
 
 
