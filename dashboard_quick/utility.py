@@ -55,10 +55,10 @@ def socioeconomic_map(df, geojsonfile):
             df,
             geojson = geojsonfile, 
             color = "bin_value_bin",
-            color_discrete_map={'3': '#FFAD05',
-                                '2': '#FED628',
-                                '1': '#F1F374',
-                                '0': '#D6D6CE'},
+            color_discrete_map={'Q4': '#FFAD05',
+                                'Q3': '#FED628',
+                                'Q2': '#F1F374',
+                                'Q1': '#D6D6CE'},
             labels = {'bin_value_bin': ''},
             locations = 'geoid10', 
             featureidkey = "properties.geoid10", 
@@ -153,10 +153,10 @@ def histogram(df, variable):
     '''
     hist = px.histogram(df, x = variable, 
                         color = "bin_value_bin",
-                        color_discrete_map={'3': '#FFAD05',
-                                            '2': '#FED628',
-                                            '1': '#F1F374',
-                                            '0': '#D6D6CE'},
+                        color_discrete_map={'Q4': '#FFAD05',
+                                            'Q3': '#FED628',
+                                            'Q2': '#F1F374',
+                                            'Q1': '#D6D6CE'},
                         labels = {'bin_value_bin': ''}
                         )
     hist.layout.update(
