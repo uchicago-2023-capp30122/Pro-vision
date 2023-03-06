@@ -6,24 +6,6 @@ import dash_bootstrap_components as dbc # Template
 import copy as cp
 import scripts.pre_process as prepro
 
-indicator_vars = [
-    "Uninsured rate (% of residents), 2015-2019",
-    "Homicide (crimes), 2017-2021",
-    "Major crime (crimes), 2016-2020",
-    "Violent crime (crimes), 2016-2020",
-    "Eviction rate (% of renter-occupied households), 2018",
-    "Severely rent-burdened (% of renter-occupied housing units), 2015-2019",
-    "Traffic crashes (number of crashes), 2021",
-    "High school graduation rate (% of residents), 2015-2019",
-    "College graduation rate (% of residents), 2015-2019",
-    "Unemployment rate (%), 2015-2019",
-    "Median household income, 2015-2019",
-    "Per capita income, 2015-2019",
-    "Poverty rate (% of residents), 2015-2019",
-    "Demographics, minorities (% of residents), 2016-2020",
-    "Population (residents), 2015-2019",
-]
-
 app = Dash(__name__, external_stylesheets=[dbc.themes.FLATLY])
 
 #------- GEOJSON CENSUS TACTS OF THE CITY OF CHICAGO -------#
@@ -40,7 +22,7 @@ isochroneMaps = prepro.isochrone_json()
 #                           dtype={'GEOID': str, 'Longitude': float, 'Latitude': float, 
 #                                  'geometry': str, 'indicator': str, 'value': float,
 #                                  'bin_value_bin': str})
-cleanData = prepro.get_clean_centract_sei(indicator_vars)
+cleanData = prepro.get_clean_centract_sei(prepro.indicator_vars)
 cleanData = cleanData.rename(columns={'indicator': 'SocEconVar', 'GEOID': 'geoid10'}) 
 
 #------- DATA FOR PUBLIC FACILITIES/PROVISIONS -------#
@@ -229,4 +211,4 @@ def update_figure(SocEconValue, ProvisionValue):
 
 
 if __name__ == '__main__':
-    app.run_server(host='127.0.0.1', port='8090', debug = False) 
+    app.run_server(host='127.0.0.1', port='4444', debug = False) 
