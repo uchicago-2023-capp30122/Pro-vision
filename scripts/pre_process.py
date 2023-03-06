@@ -61,6 +61,9 @@ def get_clean_centract_sei():
     return final_centract
 
 def isochrone_add():
+    '''
+    Add isochrones to cleaned provision data
+    '''
     prov_data = get_clean_prov()
     prov_data["isochrones"] = prov_data.apply(
         lambda row: get_isochrones(row["coords"], row["type"]),
@@ -69,6 +72,9 @@ def isochrone_add():
     return prov_data
 
 def isochrone_json():
+    '''
+    convert isochrones to a json file
+    '''
     combined_geoj = {}
     iso_data = isochrone_add()
     merged_geo = merge_geojson(iso_data)

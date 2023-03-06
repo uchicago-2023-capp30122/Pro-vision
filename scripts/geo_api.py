@@ -46,7 +46,7 @@ def get_isochrones(coords, pkey):
     text element of request response
     """
     data = create_request(coords, pkey)
-    response = requests.post(URL, headers=headers, json=data)
+    response = requests.post(URL, headers=headers, json=data, timeout=30)
     return response.text
 
 
@@ -74,7 +74,6 @@ def merge_geojson(dataframe):
     merged_geo = {}
     for prov, prov_df in gp_iso.items():
         merged_geo[prov] = []
-        # for geom in prov_df['isochrones']:
         for idx, geom in prov_df["isochrones"].iteritems():
             shape = json.loads(geom)
             shape["features"][0]["properties"]["full_address"] = prov_df.loc[
