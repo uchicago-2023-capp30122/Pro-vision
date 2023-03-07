@@ -25,9 +25,10 @@ First, we focused on the following relevant provision services:
   -
   -
   -
+
 For each of them, all the locations are plotted on a map of Chicago, along with isochrones centered in each point (isochrone delineate the geographic space in a 10 minute distance).
 
-<INSERT SCREENSHOT OF ONLY ISOCHRONES>
+<INSERT SCREENSHOT OF **ONLY** ISOCHRONES>
 
 
 ### Visual correlation between socioeconomic indicators and coverage
@@ -36,7 +37,9 @@ Second, we sharpened the analysis by overlapping socioeconomic indicators to our
   -
   -
   -
+
 Indicators values have been categorised in quartiles, for analytical reasons. Histograms for each indicator are provided.
+
 
 <INSERT SCREENSHOT OF THE WHOLE PICTURE>  
 
@@ -45,17 +48,49 @@ Indicators values have been categorised in quartiles, for analytical reasons. Hi
   
 As a final step, we move from a geographical representation of Chicago to an abstract one by turning the city into a network, in order to make use of Graph Theory to simulate shocks. We build an adjacency matrix where each node is a community area and these are connected by edges if they are bordering. All nodes are labelled with the following binary attributes: {'Tensioned area': 0-1, 'Provision center within the area': 0-1}
 
-We restrict our analysis to homicide rate as socioeconomic indicator and police stations as provision service, and apply two independent kinds of shocks:
-  - Stochastic allocation of tension degree
-  - Reduction of the number of police stations by a factor of 0.4
-To measure the resilience of the system to these shocks, we build a table with the most tensioned areas and the distance to the nearest police stations after the shock.
+  **Chicago as a network of nodes**
+<INSERT Graph_no_labels.JPG>
   
-<INSERT SCREENSHOTS>
+  **Community areas with police station**
+<INSERT Graph_prov_labels.JPG>
+  
+  **Tensioned community areas**
+<INSERT Graph_com_labels.JPG>
+  
+  
+We restrict our analysis to homicide rate as socioeconomic indicator and police stations as provision service, and apply two independent kinds of shocks:
+  - Stochastic allocation of tension degree to each community area
+  - Reduction of the number of police stations by a factor of 0.4
+
+  To measure the resilience of the system to these shocks (change in social tension patterns / abrupt budetary reduction), we build a table with the most tensioned areas and the distance to the nearest police stations after the shock.
+  
+  **Statu quo**
+<INSERT Table_no_shock.JPG>
+  
+  **Shock in tensioned areas**
+<INSERT Table_shock_tens.JPG>
+  
+  **Shock in number of provision centers**
+<INSERT Table_shock_provs.JPG>
 
 
 ## Installation and Execution
 
 <Instructions for how to install your project, including any dependencies or prerequisites. You can also include information about how to set up your development environment here.>
+  
+  
+### Simulating shocks
+  
+This section is a complementary feature of the project, i.e. not integrated and not included in the dashboard (yet!).
+  
+**To run the simulation:**
+  1. Run 'python3 run_simulation.py'
+  2. Tables will be printed in the terminal, and graphs will be saved in current directory
+
+**To generate the times matrix used for the simulation, from TravelTime API (one-off):**
+  1. Run 'python3 run_api_times.py'
+  2. A JSON file will be saved in the current directory
+  
 
 ## Interface Usage
 
@@ -82,8 +117,8 @@ To measure the resilience of the system to these shocks, we build a table with t
 
 ## Contact
 
-Setu Loomba - setu@uchicago.edu
-Diego Martin Mendoza - diegomendozamz@uchicago.edu
+Setu Loomba - setu@uchicago.edu;
+Diego Martin Mendoza - diegomendozamz@uchicago.edu;
 Angel Rodriguez Gonzalez - angelrodriguezg@uchicago.edu
 
 ## Acknowledgments
