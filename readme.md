@@ -29,6 +29,7 @@ For each of them, all the locations are plotted on a map of Chicago, along with 
 
 
 ### Visual correlation between socioeconomic indicators and coverage
+  
 Second, we sharpened the analysis by overlapping socioeconomic indicators to our maps, in order to capture patterns/visual correlations between the socioeconomic features odf certain areas and their degree of coverage. We selected the following indicators:
   -
   -
@@ -39,6 +40,7 @@ Indicators values have been categorised in quartiles, for analytical reasons. Hi
 
 
 ### Simulating shocks
+  
 As a final step, we move from a geographical representation of Chicago to an abstract one by turning the city into a network, in order to make use of Graph Theory to simulate shocks. We build an adjacency matrix where each node is a community area and these are connected by edges if they are bordering. All nodes are labelled with the following binary attributes: {'Tensioned area': 0-1, 'Provision center within the area': 0-1}
 
 We restrict our analysis to homicide rate as socioeconomic indicator and police stations as provision service, and apply two independent kinds of shocks:
@@ -84,4 +86,4 @@ Angel Rodriguez Gonzalez - angelrodriguezg@uchicago.edu
 
 ## Acknowledgments
 
-We very much appreciate James Turk and Megan Moore's help and hints.
+We very much appreciate James Turk and Megan Moore's help and invaluable suggestions.
