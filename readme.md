@@ -19,6 +19,7 @@ As foreign students in the University of Chicago, we felt a need to better under
 
 ## Highlights
 ### Coverage of the territory
+
 First, we focused on the following relevant provision services:
   -
   -
