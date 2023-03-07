@@ -1,3 +1,12 @@
+'''
+Simulation - API for times
+
+ANGEL RODRIGUEZ GONZALEZ
+
+Implements the call to the TravelTime API and transforms its output.
+'''
+
+
 from datetime import datetime
 import pandas as pd
 from traveltimepy import Location, Coordinates, Property, TravelTimeSdk, Driving
@@ -9,8 +18,14 @@ def get_distances(prov_data, sei_data, *, \
     lim_time = 14400):
     """
     Uses TravelTime API to get the distances from each community area to each
-    provision center.
+        provision center.
     Parameters:
+        prov_data: (csv) cleaned data where each row represents a provision
+            center
+        sei_data: (csv) cleaned data where each row represents a community
+            area
+        dep_time: (float) time of departure for the time calculation
+        lim_time: (float) furthest reachable points, in secs
     Returns
     """
 
@@ -93,7 +108,15 @@ def get_distances(prov_data, sei_data, *, \
 def inputs_for_locations(prov_centers, com_areas, *, \
                          prov_serv = 'police_stations', sei_ind = 'homicide in community areas'):
     """
-    ---
+    Transforms csv files into cleane dataframe
+    Parameters:
+        prov_data: (csv) cleaned data where each row represents a provision
+            center
+        sei_data: (csv) cleaned data where each row represents a community
+            area
+        prov_serv: (str) for filtering provision service
+        sei_ind: (str) for filtering socioeconomic vulnerability
+    Returns a dictionary of dataframes
     """
 
     prov_centers = prov_centers[prov_centers['type'] == prov_serv] 

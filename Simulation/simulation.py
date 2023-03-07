@@ -15,7 +15,6 @@ import json
 import matplotlib.pyplot as plt
 from matplotlib import use
 import random
-# import utils
 import copy
 
 
@@ -108,6 +107,7 @@ class Network(object):
 
         self.df = df.copy(deep = True)
   
+
         # Third: Creates self.table_statu_quo. This will be called back in the
         #   dashboard
         table_statu_quo = df[df['Tensioned'] == 1]
@@ -118,14 +118,12 @@ class Network(object):
 
 
 
-    def gen_adjacency_graph(self, colors = 'baseline'):
+    def gen_adjacency_graph(self):
         """
         Generates the graph that models the city of Chicago as a network of 
             community areas, where connected nodes are bordering areas. The value
             of each node indicates whether the community area is near a police 
             station and whether it is tensioned (top10 in homicide rate). 
-        Parameters:
-            colors: (str) incorporates the user choice in the dashboard
         """
 
         # First: Opens and cleans the csv with the community areas pairs
@@ -134,67 +132,29 @@ class Network(object):
             lambda x: pd.Series(str(x).strip('()').split(',')))
         pairs['Pairs'] = pairs[['Origin', 'Destination']].apply(tuple, axis=1)
         
-        # Second: Generates the adjacency graph.
-        #   Notes on some steps: Uses the adjacency tuples and than adds a
-        #       dictionary as attribute for each node, labelling whether the
-        #       community area is tensioned or not, and whether it has a provision
-        #       center within its boundaries or not.
+
+        # Second: Generates the adjacency graph from the adjacency tuples, adds
+        #   binary labels as attributes with colors, and saves the graphs (will 
+        #   be called back by dashboard) 
         G = nx.Graph(pairs['Pairs'])
 
-        attrs = {}
-        for _, com in self.df.iterrows():
-            label = {'Tensioned': com['Tensioned'], 'Prov_within': com['Prov_within']}
-            key = com['community_area']
-            attrs[key] = label
-        nx.set_node_attributes(G, attrs) # for debugging: nx.get_node_attributes(G, "Tensioned")[<node name>] or G[<node name>]["Tensioned"]
+        graph_attr(self.df, G)
 
-
-        # Third: Assigns colors to labels and prints the graph
-        tens_colors = {0: '#D6D6CE', 1: '#FFAD05'}
-        prov_colors = {0: '#D6D6CE', 1: '#FED628'}
-        tens_node_colors = []
-        prov_node_colors = []
-        for node in G.nodes():
-            tens_node_colors.append(tens_colors[G.nodes[node]['Tensioned']])
-            prov_node_colors.append(prov_colors[G.nodes[node]['Prov_within']])
-
-        use('agg')
-        if colors == 'baseline':
-            plt.clf()
-            pos = nx.spring_layout(G, seed = 225)
-            nx.draw(G, pos, node_color = '#D6D6CE', \
-                    edgecolors = '#5A5A5A', edge_color = '#5A5A5A')
-            plt.savefig('network_baseline.png')
-        elif colors == 'Tensioned community area':
-            plt.clf()
-            pos = nx.spring_layout(G, seed = 225)
-            nx.draw(G, pos, node_color = tens_node_colors, \
-                    edgecolors = '#5A5A5A', edge_color = '#5A5A5A')
-            plt.savefig('network_tens.png')
-        elif colors == 'Provision within community area':
-            plt.clf()
-            pos = nx.spring_layout(G, seed = 225)
-            nx.draw(G, pos, node_color = prov_node_colors, \
-                    edgecolors = '#5A5A5A', edge_color = '#5A5A5A')
-            plt.savefig('network_prov.png')
-        # plt.show()   # https://networkx.guide/visualization
-                     # https://networkx.org/documentation/stable/reference/drawing.html
+        graph_draw(G, 'no_shock')
         
 
-        # Fourth: Creates self.G. This will be used as base for the graphs with 
+        # Third: Creates self.G. This will be used as base for the graphs with 
         #   shock.
         self.G = copy.deepcopy(G)
         
 
 
 
-    def apply_shock_com_areas(self, colors = 'baseline'):
+    def apply_shock_com_areas(self):
         """
         Generates a random shock in the degree of tension for all the community 
             areas: the assignation of top-tensioned areas is stochastically 
             modified.
-        Parameters:
-            colors: (str) incorporates the user choice in the dashboard
         """
 
         # First: Creates self.df_shock_com (shocked version of self.df). Applies
@@ -204,50 +164,15 @@ class Network(object):
         shock_rows = np.random.choice(\
             self.df_shock_com.index, size = 10, replace = False)
         self.df_shock_com.loc[shock_rows, 'Tensioned_sim'] = 1
-        # self.df_shock_com['Min_dist_shock'] = self.df_shock_com[[]].apply(min, axis = 1)  # Complete with the missing cols    # Why did I write this??
 
 
-        # Second: Modifies the graph labels and prints the new graph
+        # Second: New graphs
         G_shock_com = copy.deepcopy(self.G)
 
-        attrs = {}
-        for _, com in self.df_shock_com.iterrows():
-            label = {'Tensioned': com['Tensioned_sim'], \
-                     'Prov_within': com['Prov_within']}
-            key = com['community_area']
-            attrs[key] = label
+        graph_attr(self.df_shock_com, G_shock_com)
 
-        nx.set_node_attributes(G_shock_com, attrs)
+        graph_draw(G_shock_com, 'shock_com')
 
-        tens_colors = {0: '#D6D6CE', 1: '#FFAD05'}
-        prov_colors = {0: '#D6D6CE', 1: '#FED628'}
-        tens_node_colors = []
-        prov_node_colors = []
-        for node in G_shock_com.nodes():
-            tens_node_colors.append(\
-                tens_colors[G_shock_com.nodes[node]['Tensioned']])
-            prov_node_colors.append(\
-                prov_colors[G_shock_com.nodes[node]['Prov_within']])
-
-        use('agg')
-        if colors == 'baseline':
-            plt.clf()
-            pos = nx.spring_layout(G_shock_com, seed = 225)
-            nx.draw(G_shock_com, pos, node_color = '#D6D6CE', \
-                    edgecolors = '#5A5A5A', edge_color = '#5A5A5A')
-            plt.savefig('network_baseline_shock_tens.png')
-        elif colors == 'Tensioned community area':
-            plt.clf()
-            pos = nx.spring_layout(G_shock_com, seed = 225)
-            nx.draw(G_shock_com, pos, node_color = tens_node_colors, \
-                    edgecolors = '#5A5A5A', edge_color = '#5A5A5A')
-            plt.savefig('network_tens_shock_tens.png')
-        elif colors == 'Provision within community area':
-            plt.clf()
-            pos = nx.spring_layout(G_shock_com, seed = 225)
-            nx.draw(G_shock_com, pos, node_color = prov_node_colors, \
-                    edgecolors = '#5A5A5A', edge_color = '#5A5A5A')
-            plt.savefig('network_prov_shock_tens.png')
 
         # Third: Creates self.table_shock_com (shocked version of 
         #   self.df_statu_quo). This will be called back in the dashboard
@@ -260,15 +185,14 @@ class Network(object):
 
 
 
-    def apply_shock_prov_centers(self, reduction = 0.25, colors = 'baseline'):
+    def apply_shock_prov_centers(self, reduction = 0.4):
         """
         Generates a random shock in the set of provision centers: the number of
             operating centers is reduced by a factor and the eliminated centers
             are stochastically selected.
         Parameters:
             redution: (float) percentage reduction in the number of provision 
-                centers
-            colors: (str) incorporates the user choice in the dashboard      
+                centers     
         """
 
         # First: Creates self.df_shock_prov (shocked version of self.df). Applies
@@ -285,56 +209,25 @@ class Network(object):
         prov_cens_shock_df = self.prov_centers[\
             self.prov_centers['ADDRESS'].isin(prov_centers_shock)] 
         self.df_shock_prov['Prov_within_shock'] = self.df_shock_prov['geometry'].apply(\
-            lambda x: 1 if point_in_area(prov_cens_shock_df['coords_geo'], x) else 0)   # (before: point_in_area(prov_cens_shock_df['coords_geo'], x, prov_centers_shock)        
+            lambda x: 1 if point_in_area(prov_cens_shock_df['coords_geo'], x) else 0) 
 
 
-        # Second: Modifies the graph labels and prints the new graph
+        # Second: New graphs
         G_shock_prov = copy.deepcopy(self.G)
 
-        attrs = {}
-        for _, com in self.df_shock_prov.iterrows():
-            label = {'Tensioned': com['Tensioned'], 'Prov_within': com['Prov_within_shock']}
-            key = com['community_area']
-            attrs[key] = label
+        graph_attr(self.df_shock_prov, G_shock_prov)
 
-        nx.set_node_attributes(G_shock_prov, attrs)  
-
-        tens_colors = {0: '#D6D6CE', 1: '#FFAD05'}
-        prov_colors = {0: '#D6D6CE', 1: '#FED628'}
-        tens_node_colors = []
-        prov_node_colors = []
-        for node in G_shock_prov.nodes():
-            tens_node_colors.append(tens_colors[G_shock_prov.nodes[node]['Tensioned']])
-            prov_node_colors.append(prov_colors[G_shock_prov.nodes[node]['Prov_within']])
-
-        use('agg')
-        if colors == 'baseline':
-            plt.clf()
-            pos = nx.spring_layout(G_shock_prov, seed = 225)
-            nx.draw(G_shock_prov, pos, node_color = '#D6D6CE', \
-                    edgecolors = '#5A5A5A', edge_color = '#5A5A5A')
-            plt.savefig('network_baseline_shock_prov.png')
-        elif colors == 'Tensioned community area':
-            plt.clf()
-            pos = nx.spring_layout(G_shock_prov, seed = 225)
-            nx.draw(G_shock_prov, pos, node_color = tens_node_colors, \
-                    edgecolors = '#5A5A5A', edge_color = '#5A5A5A')
-            plt.savefig('network_tens_shock_prov.png')
-        elif colors == 'Provision within community area':
-            plt.clf()
-            pos = nx.spring_layout(G_shock_prov, seed = 225)
-            nx.draw(G_shock_prov, pos, node_color = prov_node_colors, \
-                    edgecolors = '#5A5A5A', edge_color = '#5A5A5A')
-            plt.savefig('network_prov_shock_prov.png')
+        graph_draw(G_shock_prov, 'shock_prov')  
 
 
         # Third: Creates self.table_shock_prov (shocked version of 
         #   self.df_statu_quo). This will be called back in the dashboard
         table_shock_prov = self.df_shock_prov[\
-            self.df_shock_prov['Tensioned_sim'] == 1]
+            self.df_shock_prov['Tensioned'] == 1]
         table_shock_prov = table_shock_prov.rename(columns = \
             {'community_area': 'Community area', 'Min_dist_shock': 'Min. distance'})
         self.table_shock_prov = table_shock_prov[['Community area', 'Min. distance']]
+
 
 
 
@@ -356,6 +249,7 @@ def ui_shock(network, shock_source = 'Reset'):
         network.apply_shock_prov_centers()
         return network.table_shock_prov
     else:
+        network.gen_adjacency_graph()
         return network.table_statu_quo
 
 
@@ -381,6 +275,61 @@ def point_in_area(points, polygon):
 
 def switch_tuple_order(tup):
     """
-    ---
+    Switches order in a tuple
     """
     return (tup[1], tup[0])
+
+
+
+def graph_attr(dataframe, graph):
+    """
+    Adds a dictionary as attribute for each node, labelling whether the community
+        area is tensioned or not, and whether it has a provision center within 
+        its boundaries or not.
+    Parameters:
+        dataframe: (pd.object)
+        graph: (nx.object)
+    """
+    attrs = {}
+    for _, com in dataframe.iterrows():
+        label = {'Tensioned': com['Tensioned'], 'Prov_within': com['Prov_within']}
+        key = com['community_area']
+        attrs[key] = label
+
+    nx.set_node_attributes(graph, attrs) 
+
+
+
+def graph_draw(graph, shock):
+    """
+    Assigns colors to labels, to highlight tensioned community areas and areas 
+        with a provision center within its boundaries. Saves the new 3 graphs 
+        (one per possible user selection) for display in the user interface.
+    Parameters:
+        graph: (nx.object)
+        shock: (str)
+    """
+    tens_colors = {0: '#D6D6CE', 1: '#FFAD05'}
+    prov_colors = {0: '#D6D6CE', 1: '#FED628'}
+    tens_node_colors = []
+    prov_node_colors = []
+    for node in graph.nodes():
+        tens_node_colors.append(tens_colors[graph.nodes[node]['Tensioned']])
+        prov_node_colors.append(prov_colors[graph.nodes[node]['Prov_within']])
+
+    use('agg')
+    user_choice = {'baseline':
+                        {'color': '#D6D6CE', 'file_name': 'baseline'},\
+                  'Tensioned community area':
+                        {'color': tens_node_colors, 'file_name': 'tens'},\
+                  'Provision within community area':
+                        {'color': prov_node_colors, 'file_name': 'prov'}}
+    for i in user_choice.values():
+        plt.clf()
+        pos = nx.spring_layout(graph, seed = 225)
+        nx.draw(graph, pos, node_color = i['color'], \
+                edgecolors = '#5A5A5A', edge_color = '#5A5A5A')
+        name = 'network_{ui}_{sh}.png'.format(ui = i['file_name'], sh = shock)
+        plt.savefig(name)
+        plt.show()
+
