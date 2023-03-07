@@ -22,7 +22,7 @@ As foreign students in the University of Chicago, we felt a need to better under
 ### Coverage of the territory
 
 First, we focused on the following relevant provision services:
-  -
+  - .
   -
   -
 
@@ -34,14 +34,14 @@ For each of them, all the locations are plotted on a map of Chicago, along with 
 ### Visual correlation between socioeconomic indicators and coverage
   
 Second, we sharpened the analysis by overlapping socioeconomic indicators to our maps, in order to capture patterns/visual correlations between the socioeconomic features odf certain areas and their degree of coverage. We selected the following indicators:
-  -
+  - .
   -
   -
 
 Indicators values have been categorised in quartiles, for analytical reasons. Histograms for each indicator are provided.
 
 
-<INSERT SCREENSHOT OF THE WHOLE PICTURE>  
+<INSERT SCREENSHOT OF THE **WHOLE** PICTURE>  
 
 
 ### Simulating shocks
@@ -49,13 +49,13 @@ Indicators values have been categorised in quartiles, for analytical reasons. Hi
 As a final step, we move from a geographical representation of Chicago to an abstract one by turning the city into a network, in order to make use of Graph Theory to simulate shocks. We build an adjacency matrix where each node is a community area and these are connected by edges if they are bordering. All nodes are labelled with the following binary attributes: {'Tensioned area': 0-1, 'Provision center within the area': 0-1}
 
   **Chicago as a network of nodes**
-<INSERT Graph_no_labels.JPG>
+<INSERT **Graph_no_labels.JPG**>
   
   **Community areas with police station**
-<INSERT Graph_prov_labels.JPG>
+<INSERT **Graph_prov_labels.JPG**>
   
   **Tensioned community areas**
-<INSERT Graph_com_labels.JPG>
+<INSERT **Graph_com_labels.JPG**>
   
   
 We restrict our analysis to homicide rate as socioeconomic indicator and police stations as provision service, and apply two independent kinds of shocks:
@@ -65,13 +65,13 @@ We restrict our analysis to homicide rate as socioeconomic indicator and police 
   To measure the resilience of the system to these shocks (change in social tension patterns / abrupt budetary reduction), we build a table with the most tensioned areas and the distance to the nearest police stations after the shock.
   
   **Statu quo**
-<INSERT Table_no_shock.JPG>
+<INSERT **Table_no_shock.JPG**>
   
   **Shock in tensioned areas**
-<INSERT Table_shock_tens.JPG>
+<INSERT **Table_shock_tens.JPG**>
   
   **Shock in number of provision centers**
-<INSERT Table_shock_provs.JPG>
+<INSERT **Table_shock_provs.JPG**>
 
 
 ## Installation and Execution
@@ -84,11 +84,11 @@ We restrict our analysis to homicide rate as socioeconomic indicator and police 
 This section is a complementary feature of the project, i.e. not integrated and not included in the dashboard (yet!).
   
 **To run the simulation:**
-  1. Run 'python3 run_simulation.py'
+  1. Run `python3 run_simulation.py`
   2. Tables will be printed in the terminal, and graphs will be saved in current directory
 
 **To generate the times matrix used for the simulation, from TravelTime API (one-off):**
-  1. Run 'python3 run_api_times.py'
+  1. Run `python3 run_api_times.py`
   2. A JSON file will be saved in the current directory
   
 
@@ -106,13 +106,13 @@ This section is a complementary feature of the project, i.e. not integrated and 
 
 ## Data Sources
 1. Data on public services provision
-    - https://data.cityofchicago.org/
+    - Chicago Data Portal: https://data.cityofchicago.org/
 2. Data on socioeconomic indicators
-    - https://chicagohealthatlas.org/indicators/
+    - Chicago Atlas Health: https://chicagohealthatlas.org/indicators/
 3. Data on geographical coordinates for census tracts and community areas:
-    - https://data.cityofchicago.org/Facilities-Geographic-Boundaries/Boundaries-Community-Areas-current-/cauq-8yn6
+    - Chicago Data Portal: https://data.cityofchicago.org/Facilities-Geographic-Boundaries/Boundaries-Community-Areas-current-/cauq-8yn6
 5. Data on time distances
-    - TravelTime API
+    - TravelTime API: https://docs.traveltime.com/api/overview/introduction
 
 
 ## Contact
