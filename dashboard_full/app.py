@@ -13,20 +13,13 @@ with open("raw_data/Boundaries - Census Tracts - 2010.geojson") as gjs:
         chicagoMap = json.load(gjs)
 
 #------- MERGED/APPENDED ISOCHRONES' GEOJSON -------#
-# with open("iso_coords.geojson") as js:
-#         isochroneMaps = json.load(js)
 isochroneMaps = prepro.isochrone_json()
 
 #------- DATA FOR SOCIOECONOMIC VARIABLE -------#
-# cleanData = pd.read_excel('final_geo_SEI.xlsx', sheet_name = "in", 
-#                           dtype={'GEOID': str, 'Longitude': float, 'Latitude': float, 
-#                                  'geometry': str, 'indicator': str, 'value': float,
-#                                  'bin_value_bin': str})
 cleanData = prepro.get_clean_centract_sei(prepro.indicator_vars)
 cleanData = cleanData.rename(columns={'indicator': 'SocEconVar', 'GEOID': 'geoid10'}) 
 
 #------- DATA FOR PUBLIC FACILITIES/PROVISIONS -------#
-# cleanData2 = pd.read_csv('prov_isoID.csv')
 cleanData2 = prepro.get_clean_prov()
 cleanData2[['latitude', 'longitude']] = cleanData2['coords'].apply(\
             lambda x: pd.Series(str(x).strip('()').split(',')))

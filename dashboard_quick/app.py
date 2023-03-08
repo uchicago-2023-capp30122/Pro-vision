@@ -16,10 +16,6 @@ with open("iso_coords.geojson") as js:
         isochroneMaps = json.load(js)
 
 #------- DATA FOR SOCIOECONOMIC VARIABLE -------#
-# cleanData = pd.read_excel('final_geo_SEI.xlsx', sheet_name = "in", 
-#                           dtype={'GEOID': str, 'Longitude': float, 'Latitude': float, 
-#                                  'geometry': str, 'indicator': str, 'value': float,
-#                                  'bin_value_bin': str})
 cleanData = pd.read_csv('geo_sei_labeled.csv', 
                           dtype={'GEOID': str, 'Longitude': float, 'Latitude': float, 
                                  'geometry': str, 'indicator': str, 'value': float,
