@@ -72,10 +72,10 @@ We restrict our analysis to homicide rate as socioeconomic indicator and police 
   
 ### Simulating shocks
   
-This section is a complementary feature of the project, i.e. not integrated and not included in the dashboard (yet!).
+This section is a complementary feature of the project, i.e. not included in the dashboard (yet!).
   
 **To run the simulation:**
-  1. GO to `Simulation`, and run `python3 run_simulation.py`
+  1. Go to `Simulation`, and run `python3 run_simulation.py`
   2. Tables will be printed in the terminal, and graphs will be saved in current directory
 
 **To generate the times matrix used for the simulation, from TravelTime API (one-off):**
