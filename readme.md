@@ -65,16 +65,6 @@ We restrict our analysis to homicide rate as socioeconomic indicator and police 
 
 
 
-  **Statu quo**
-<INSERT **Table_no_shock.JPG**>
-  
-  **Shock in tensioned areas**
-<INSERT **Table_shock_tens.JPG**>
-  
-  **Shock in number of provision centers**
-<INSERT **Table_shock_provs.JPG**>
-
-
 ## Installation and Execution
 
 <Instructions for how to install your project, including any dependencies or prerequisites. You can also include information about how to set up your development environment here.>
@@ -85,7 +75,7 @@ We restrict our analysis to homicide rate as socioeconomic indicator and police 
 This section is a complementary feature of the project, i.e. not integrated and not included in the dashboard (yet!).
   
 **To run the simulation:**
-  1. Run `python3 run_simulation.py`
+  1. GO to `Simulation`, and run `python3 run_simulation.py`
   2. Tables will be printed in the terminal, and graphs will be saved in current directory
 
 **To generate the times matrix used for the simulation, from TravelTime API (one-off):**
