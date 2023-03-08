@@ -3,7 +3,7 @@
 #### Setu Loomba - Diego Mendoza Martinez - Angel Rodriguez Gonzalez
 #### March 2023
 
-As foreign students in the University of Chicago, we felt a need to better understand how the public sector in the US provides its citizens with basic services to at a municipal level. This project studies the geographical coverage of public services in the city of Chicago, accounting for the inequality regarding some socioeconomic indicators among neighborhoods.
+As foreign students in the University of Chicago, we felt a need to better understand how the public sector in the US provides its citizens with basic services at a municipal level. This project studies the geographical coverage of public services in the city of Chicago, accounting for the inequality regarding some socioeconomic indicators among neighborhoods.
 
 
 
@@ -28,7 +28,7 @@ First, we focused on the following relevant provision services:
 
 For each of them, all the locations are plotted on a map of Chicago, along with isochrones centered in each point (isochrone delineate the geographic space in a 10 minute distance).
 
-<INSERT SCREENSHOT OF **ONLY** ISOCHRONES>
+![isos](https://github.com/uchicago-capp122-spring23/Pro-vision/blob/main/dashboard_quick/Images/Isos.JPG)
 
 
 ### Visual correlation between socioeconomic indicators and coverage
@@ -41,7 +41,7 @@ Second, we sharpened the analysis by overlapping socioeconomic indicators to our
 Indicators values have been categorised in quartiles, for analytical reasons. Histograms for each indicator are provided.
 
 
-<INSERT SCREENSHOT OF THE **WHOLE** PICTURE>  
+![complete](https://github.com/uchicago-capp122-spring23/Pro-vision/blob/main/dashboard_quick/Images/dashboard_ProVision.png)  
 
 
 ### Simulating shocks
