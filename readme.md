@@ -79,7 +79,7 @@ This section is a complementary feature of the project, i.e. not included in the
   2. Tables will be printed in the terminal, and graphs will be saved in current directory
 
 **To generate the times matrix used for the simulation, from TravelTime API (one-off):**
-  1. Run `python3 run_api_times.py`
+  1. Go to `Simulation`, and run `python3 run_api_times.py`
   2. A JSON file will be saved in the current directory
   
 
