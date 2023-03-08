@@ -33,7 +33,7 @@ For each of them, all the locations are plotted on a map of Chicago, along with 
 
 ### Visual correlation between socioeconomic indicators and coverage
   
-Second, we sharpened the analysis by overlapping socioeconomic indicators to our maps, in order to capture patterns/visual correlations between the socioeconomic features odf certain areas and their degree of coverage. We selected the following indicators:
+Second, we sharpened the analysis by overlapping socioeconomic indicators to our maps, in order to capture patterns/visual correlations between the socioeconomic features of certain areas and their degree of coverage. We selected the following indicators:
   - .
   -
   -
