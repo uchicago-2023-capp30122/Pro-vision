@@ -59,7 +59,7 @@ We restrict our analysis to homicide rate as socioeconomic indicator and police 
 
   To measure the resilience of the system to these shocks (change in social tension patterns / abrupt budetary reduction), we build a table with the most tensioned areas and the distance to the nearest police stations after the shock.
 
-| **Statu quo** | **Shock in tensioned areas** | **Shock in number of provision centers** |
+| **Status quo** | **Shock in tensioned areas** | **Shock in number of provision centers** |
 | --------------------------------- | --------------------------------------- | ----------------------------- |
 | ![no_shock](https://github.com/uchicago-capp122-spring23/Pro-vision/blob/main/Simulation/Images/Table_no_shock.JPG) | ![shock_tension](https://github.com/uchicago-capp122-spring23/Pro-vision/blob/main/Simulation/Images/Table_shock_tens.JPG) | ![shock_num_stations](https://github.com/uchicago-capp122-spring23/Pro-vision/blob/main/Simulation/Images/Table_shock_provs.JPG) |
 
