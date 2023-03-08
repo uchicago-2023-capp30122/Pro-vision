@@ -66,8 +66,14 @@ We restrict our analysis to homicide rate as socioeconomic indicator and police 
 
 
 ## Installation and Execution
-
-<Instructions for how to install your project, including any dependencies or prerequisites. You can also include information about how to set up your development environment here.>
+To run package in Linux:
+1. Clone this repository to your linux machine.
+2. From inside the project directory (Pro-vision), run 'poetry install' to install dependencies.
+3. Run 'poetry shell' to create a virtual environment.
+4. Once the environment is running, you are ready to run the Pro-vision dashboard and simulation generator.
+5. To run the quick version of the dashboard (uses pre-processed local files), go to 'Pro-vision/dashboard_quick' and run 'python3 app.py'.
+6. To run the full version of the dashboard (includes back-end data cleaning and api-access to fetch isochrones), go to 'Pro-vision/dashboard_full' and run 'python3 app.py'
+7. To run the simulation generator, go to the directory called 'Simulation' and run 'python3 simulation.py'
   
   
 ### Simulating shocks
