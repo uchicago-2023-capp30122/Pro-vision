@@ -48,14 +48,9 @@ Indicators values have been categorised in quartiles, for analytical reasons. Hi
   
 As a final step, we move from a geographical representation of Chicago to an abstract one by turning the city into a network, in order to make use of Graph Theory to simulate shocks. We build an adjacency matrix where each node is a community area and these are connected by edges if they are bordering. All nodes are labelled with the following binary attributes: {'Tensioned area': 0-1, 'Provision center within the area': 0-1}
 
-  **Chicago as a network of nodes**
-<INSERT **Graph_no_labels.JPG**>
-  
-  **Community areas with police station**
-<INSERT **Graph_prov_labels.JPG**>
-  
-  **Tensioned community areas**
-<INSERT **Graph_com_labels.JPG**>
+| **Chicago as a network of nodes** | **Community areas with police station** | **Tensioned community areas** |
+| --------------------------------- | --------------------------------------- | ----------------------------- |
+| ![default](https://github.com/uchicago-capp122-spring23/Pro-vision/blob/main/Simulation/Images/Graph_no_labels.JPG) | ![police stations](https://github.com/uchicago-capp122-spring23/Pro-vision/blob/main/Simulation/Images/Graph_prov_labels.JPG) | ![tensioned](https://github.com/uchicago-capp122-spring23/Pro-vision/blob/main/Simulation/Images/Graph_tens_labels.JPG) |
   
   
 We restrict our analysis to homicide rate as socioeconomic indicator and police stations as provision service, and apply two independent kinds of shocks:
@@ -63,7 +58,13 @@ We restrict our analysis to homicide rate as socioeconomic indicator and police 
   - Reduction of the number of police stations by a factor of 0.4
 
   To measure the resilience of the system to these shocks (change in social tension patterns / abrupt budetary reduction), we build a table with the most tensioned areas and the distance to the nearest police stations after the shock.
-  
+
+| **Statu quo** | **Shock in tensioned areas** | **Shock in number of provision centers** |
+| --------------------------------- | --------------------------------------- | ----------------------------- |
+| ![no_shock](https://github.com/uchicago-capp122-spring23/Pro-vision/blob/main/Simulation/Images/Table_no_shock.JPG) | ![shock_tension](https://github.com/uchicago-capp122-spring23/Pro-vision/blob/main/Simulation/Images/Table_shock_tens.JPG) | ![shock_num_stations](https://github.com/uchicago-capp122-spring23/Pro-vision/blob/main/Simulation/Images/Table_shock_provs.JPG) |
+
+
+
   **Statu quo**
 <INSERT **Table_no_shock.JPG**>
   
