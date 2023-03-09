@@ -53,7 +53,7 @@ Second, we sharpened the analysis by overlapping socioeconomic indicators to our
 Indicators values have been categorised in quartiles, for analytical reasons. Histograms for each indicator are provided.
 
 
-![complete](https://github.com/uchicago-capp122-spring23/Pro-vision/blob/main/dashboard_quick/Images/dashboard_ProVision.png)  
+![complete](https://github.com/uchicago-capp122-spring23/Pro-vision/blob/main/socIndDash.png)  
 
 
 ### Simulating shocks
