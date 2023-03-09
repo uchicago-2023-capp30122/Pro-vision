@@ -112,14 +112,6 @@ The full dashboard looks as follows:
 ![complete](https://github.com/uchicago-capp122-spring23/Pro-vision/blob/main/dashboard_quick/Images/dashboard_ProVision.png)  
 
 
-## Contributing
-
-<Information for users who want to contribute to your project, including guidelines for submitting pull requests or bug reports. You can also include a code of conduct here.>
-
-## License
-
-<Information about the license under which your project is released. You can include a link to the license file if you have one.>
-
 ## Data Sources
 1. Data on public services provision
     - Chicago Data Portal: https://data.cityofchicago.org/
