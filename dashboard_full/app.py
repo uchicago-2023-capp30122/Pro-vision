@@ -1,15 +1,15 @@
 from dash import Dash, dcc, html, Input, Output 
-import utility as ut # Graph functions
+import ProVision.dashboard_quick.utility as ut # Graph functions
 import json
 import pandas as pd 
 import dash_bootstrap_components as dbc # Template
 import copy as cp
-import scripts.pre_process as prepro
+import ProVision.dashboard_full.scripts.pre_process as prepro
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.FLATLY])
 
 #------- GEOJSON CENSUS TACTS OF THE CITY OF CHICAGO -------#
-with open("raw_data/Boundaries - Census Tracts - 2010.geojson") as gjs:
+with open("ProVision/dashboard_quick/Boundaries - Census Tracts - 2010.geojson") as gjs:
         chicagoMap = json.load(gjs)
 
 #------- MERGED/APPENDED ISOCHRONES' GEOJSON -------#

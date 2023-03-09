@@ -26,7 +26,7 @@ def get_clean_prov():
     """
     Returns cleaned data for provisions
     """
-    path = "raw_data/provisions"
+    path = "ProVision/dashboard_full/raw_data/provisions"
     list_cols = ["ADDRESS", "CITY", "STATE", "ZIP", "LOCATION"]
     dict_provision = clean_prov(list_cols, path)
     provisions = pd.concat(dict_provision.values())
@@ -43,7 +43,7 @@ def get_clean_community_sei():
     """
     Returns cleaned community level Socio-economic indicator data
     """
-    path = "raw_data/socioecon"
+    path = "ProVision/dashboard_full/raw_data/socioecon"
     dict_sei = clean_sei_com(path)
     sei_cleaned = pd.concat(dict_sei.values())
 
@@ -54,8 +54,8 @@ def get_clean_centract_sei(indicator_vars):
     """
     Returns clean census-tract level Socio-Economic indicator data
     """
-    path_sei = "raw_data/centract/sei_centract.csv"
-    path_bounds = "raw_data/Boundaries - Census Tracts - 2010.geojson"
+    path_sei = "ProVision/dashboard_full/raw_data/centract/sei_centract.csv"
+    path_bounds = "ProVision/dashboard_full/raw_data/Boundaries - Census Tracts - 2010.geojson"
     centract = pre_clean_centract(path_sei, path_bounds)
     wide_centract, bin_vars = bin_centract(centract, path_bounds, indicator_vars)
     final_centract = reshape_data(wide_centract, indicator_vars, bin_vars)
