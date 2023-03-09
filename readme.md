@@ -91,7 +91,35 @@ This section is a complementary feature of the project, i.e. not included in the
 
 ## Interface Usage
 
-<Instructions for how to use your project, including any relevant examples or code snippets. You can also include screenshots or other visuals to help users understand how your project works.>
+Pro-vision's Dashboard and visual features are designed to allow the policymaker/analyst to derive key insights in an easy-to-understand and -interact manner. The display is divided in two columns. The left column contains a brief description of the Map's objective, two dropdown menus and a histogram. The first dropdown menu contains several socioeconomic variables that can be displayed in the map and the histogram. The second dropdown menu contains a list of Provisions (e.g., Neighborhood Health Clinics, Police Stations, etc.) that the user can select as well. At the end, there is a histogram that is only included if the user selected a socioeconomic variable. The histogram can be toggled between Quartiles (i.e., Q1 lowest quartile to Q4 highest quartile) to select/deselect socioeconomic groups; the user can also hover the histogram to see the ranges for each Quartile.
+
+The right column of the dashboard shows the map, which is traced by Census Tacts (2010). If no socioeconomic variable and no provision is selected, the map is displayed in gray and the user can hover the map to see the GEOIDs. If a socioeconomic variable is selected without any provision, the map is displayed as a choropleth map where the user can toggle as well by Quartiles. If a provision is selected without any socioeconomic variable, the map is displayed as empty (i.e., no color) but with points indicating the exact longitude and latitude of all the facilities of this provision over the map. Most importantly, the 10-minute distance coverage of these facilities are traced as boundaries in this selection. If a socioeconomic variable and provision are selected, the map displays the choropleth map and the points with its coverage boundaries. This map is fully interactive, allows to toggle between Quartiles and hover over the points to get the address of the facility and hover over the colored census tacts to get the value of the socioeconomic variable.
+
+The full dashboard looks as follows:
+
+![complete](https://github.com/uchicago-capp122-spring23/Pro-vision/blob/main/dashboard_quick/Images/dashboard_ProVision.png)  
+
+The Provisions that are included in the dropdown menu are:
+- Neighborhood Health Clinics
+- Warming Centers
+- Polic Stations
+- Fire Stations
+
+The Socioeconomic Variables that are included in this map are:
+- Uninsured rate (% of residents, 2015-2019)
+- Homicide (crimes), 2017-2021
+- Major crime (crimes), 2016-2020
+- Violent crime (crimes), 2016-2020
+- Eviction rate (% of renter-occupied households, 2018)
+- Severely rent-burdened (% of renter-occupied housing units), 2015-2019
+- Traffic crashes (number of crashes), 2021
+- High School Graduation rate (% of residents), 2015-2019
+- Unemployment rate (%), 2015-2019
+- Median Household Income, 2015-2019
+- Per Capita Income, 2015-2019
+- Poverty rate (% of residents), 2015-2019
+- Demographics, Minorities (% of residents), 2016-2020
+- Population (residents), 2015-2019
 
 ## Contributing
 
