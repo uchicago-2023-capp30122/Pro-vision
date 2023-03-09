@@ -22,9 +22,10 @@ As foreign students in the University of Chicago, we felt a need to better under
 ### Coverage of the territory
 
 First, we focused on the following relevant provision services:
-  - .
-  -
-  -
+- Neighborhood Health Clinics
+- Warming Centers
+- Polic Stations
+- Fire Stations
 
 For each of them, all the locations are plotted on a map of Chicago, along with isochrones centered in each point (isochrone delineate the geographic space in a 10 minute distance).
 
@@ -34,9 +35,20 @@ For each of them, all the locations are plotted on a map of Chicago, along with 
 ### Visual correlation between socioeconomic indicators and coverage
   
 Second, we sharpened the analysis by overlapping socioeconomic indicators to our maps, in order to capture patterns/visual correlations between the socioeconomic features of certain areas and their degree of coverage. We selected the following indicators:
-  - .
-  -
-  -
+- Uninsured rate (% of residents, 2015-2019)
+- Homicide (crimes), 2017-2021
+- Major crime (crimes), 2016-2020
+- Violent crime (crimes), 2016-2020
+- Eviction rate (% of renter-occupied households, 2018)
+- Severely rent-burdened (% of renter-occupied housing units), 2015-2019
+- Traffic crashes (number of crashes), 2021
+- High School Graduation rate (% of residents), 2015-2019
+- Unemployment rate (%), 2015-2019
+- Median Household Income, 2015-2019
+- Per Capita Income, 2015-2019
+- Poverty rate (% of residents), 2015-2019
+- Demographics, Minorities (% of residents), 2016-2020
+- Population (residents), 2015-2019
 
 Indicators values have been categorised in quartiles, for analytical reasons. Histograms for each indicator are provided.
 
@@ -99,27 +111,6 @@ The full dashboard looks as follows:
 
 ![complete](https://github.com/uchicago-capp122-spring23/Pro-vision/blob/main/dashboard_quick/Images/dashboard_ProVision.png)  
 
-The Provisions that are included in the dropdown menu are:
-- Neighborhood Health Clinics
-- Warming Centers
-- Polic Stations
-- Fire Stations
-
-The Socioeconomic Variables that are included in this map are:
-- Uninsured rate (% of residents, 2015-2019)
-- Homicide (crimes), 2017-2021
-- Major crime (crimes), 2016-2020
-- Violent crime (crimes), 2016-2020
-- Eviction rate (% of renter-occupied households, 2018)
-- Severely rent-burdened (% of renter-occupied housing units), 2015-2019
-- Traffic crashes (number of crashes), 2021
-- High School Graduation rate (% of residents), 2015-2019
-- Unemployment rate (%), 2015-2019
-- Median Household Income, 2015-2019
-- Per Capita Income, 2015-2019
-- Poverty rate (% of residents), 2015-2019
-- Demographics, Minorities (% of residents), 2016-2020
-- Population (residents), 2015-2019
 
 ## Contributing
 
