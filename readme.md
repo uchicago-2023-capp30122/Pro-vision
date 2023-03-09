@@ -29,7 +29,7 @@ First, we focused on the following relevant provision services:
 
 For each of them, all the locations are plotted on a map of Chicago, along with isochrones centered in each point (isochrone delineate the geographic space in a 10 minute distance).
 
-![isos](https://github.com/uchicago-capp122-spring23/Pro-vision/blob/main/dashboard_quick/Images/Isos.JPG)
+![isos](https://github.com/uchicago-capp122-spring23/Pro-vision/blob/main/provisionsMap.png)
 
 
 ### Visual correlation between socioeconomic indicators and coverage
