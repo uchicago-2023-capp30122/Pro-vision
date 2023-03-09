@@ -80,7 +80,7 @@ We restrict our analysis to homicide rate as socioeconomic indicator and police 
 ## Installation and Execution
 To run package in Linux:
 1. Clone this repository to your linux machine.
-2. Change the name of the repository from Pro-vision to ProVision using mv Pro-vision ProVision
+2. Change the name of the repository from Pro-vision to ProVision using `mv Pro-vision ProVision`.
 3. From inside the project directory (ProVision), run `poetry install` to install dependencies.
 4. Run `poetry shell` to create a virtual environment.
 5. Once the environment is running, you are ready to run the `ProVision` dashboard and simulation generator.
