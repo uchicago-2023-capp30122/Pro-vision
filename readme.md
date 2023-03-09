@@ -12,8 +12,7 @@ As foreign students in the University of Chicago, we felt a need to better under
 - [Highlights](#highlights)
 - [Installation and Execution](#installation-and-execution)
 - [Interface Usage](#interface-usage)
-- [Contributing](#contributing)
-- [License](#license)
+- [Documentation](#license)
 - [Data Sources](#data-sources)
 
 
@@ -29,7 +28,7 @@ First, we focused on the following relevant provision services:
 
 For each of them, all the locations are plotted on a map of Chicago, along with isochrones centered in each point (isochrone delineate the geographic space in a 10 minute distance).
 
-![isos](https://github.com/uchicago-capp122-spring23/Pro-vision/blob/main/provisionsMap.png)
+![isos](https://github.com/uchicago-capp122-spring23/Pro-vision/blob/main/Simulation/Images/Isos.JPG)
 
 
 ### Visual correlation between socioeconomic indicators and coverage
@@ -53,7 +52,7 @@ Second, we sharpened the analysis by overlapping socioeconomic indicators to our
 Indicators values have been categorised in quartiles, for analytical reasons. Histograms for each indicator are provided.
 
 
-![complete](https://github.com/uchicago-capp122-spring23/Pro-vision/blob/main/socIndDash.png)  
+![complete](https://github.com/uchicago-capp122-spring23/Pro-vision/blob/main/Simulation/Images/dashboard_ProVision.png)  
 
 
 ### Simulating shocks
@@ -109,8 +108,10 @@ The right column of the dashboard shows the map, which is traced by Census Tacts
 
 The full dashboard looks as follows:
 
-![complete](https://github.com/uchicago-capp122-spring23/Pro-vision/blob/main/fullDash.png)  
+![complete](https://github.com/uchicago-capp122-spring23/Pro-vision/blob/main/dashboard_quick/Images/dashboard_ProVision.png)  
 
+## Documentation
+![complete](https://github.com/uchicago-capp122-spring23/Pro-vision/blob/main/ProVision_Guide.pdf)
 
 ## Data Sources
 1. Data on public services provision
