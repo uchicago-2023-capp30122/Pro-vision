@@ -1,5 +1,6 @@
+import sys
 from dash import Dash, dcc, html, Input, Output 
-import utility as ut # Graph functions
+import ProVision.dashboard_quick.utility as ut # Graph functions
 import json
 import pandas as pd 
 import dash_bootstrap_components as dbc # Template
@@ -8,22 +9,22 @@ import copy as cp
 app = Dash(__name__, external_stylesheets=[dbc.themes.FLATLY])
 
 #------- GEOJSON CENSUS TACTS OF THE CITY OF CHICAGO -------#
-with open("Boundaries - Census Tracts - 2010.geojson") as gjs:
+with open("ProVision/dashboard_quick/Boundaries - Census Tracts - 2010.geojson") as gjs:
         chicagoMap = json.load(gjs)
 
 #------- MERGED/APPENDED ISOCHRONES' GEOJSON -------#
-with open("iso_coords.geojson") as js:
+with open("ProVision/dashboard_quick/iso_coords.geojson") as js:
         isochroneMaps = json.load(js)
 
 #------- DATA FOR SOCIOECONOMIC VARIABLE -------#
-cleanData = pd.read_csv('geo_sei_labeled.csv', 
+cleanData = pd.read_csv('ProVision/dashboard_quick/geo_sei_labeled.csv',
                           dtype={'GEOID': str, 'Longitude': float, 'Latitude': float, 
                                  'geometry': str, 'indicator': str, 'value': float,
                                  'bin_value_bin': str})
-cleanData = cleanData.rename(columns={'indicator': 'SocEconVar', 'GEOID': 'geoid10'}) 
+cleanData = cleanData.rename(columns={'indicator': 'SocEconVar', 'GEOID': 'geoid10'})
 
 #------- DATA FOR PUBLIC FACILITIES/PROVISIONS -------#
-cleanData2 = pd.read_csv('prov_isoID.csv')
+cleanData2 = pd.read_csv('ProVision/dashboard_quick/prov_isoID.csv')
 cleanData2[['latitude', 'longitude']] = cleanData2['coords'].apply(\
             lambda x: pd.Series(str(x).strip('()').split(',')))
 
