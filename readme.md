@@ -109,7 +109,7 @@ The right column of the dashboard shows the map, which is traced by Census Tacts
 
 The full dashboard looks as follows:
 
-![complete](https://github.com/uchicago-capp122-spring23/Pro-vision/blob/main/dashboard_quick/Images/dashboard_ProVision.png)  
+![complete](https://github.com/uchicago-capp122-spring23/Pro-vision/blob/main/fullDash.png)  
 
 
 ## Data Sources
