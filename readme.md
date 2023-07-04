@@ -1,6 +1,6 @@
 # Pro-vision
 ## CAPP122 | Final Project
-#### Setu Loomba - Diego Mendoza Martinez - Angel Rodriguez Gonzalez
+#### Setu Loomba - Diego Mendoza Martinez - Angel Rodriguez Gonzalez (Fundacion Barrie scholar)
 #### March 2023
 
 As foreign students in the University of Chicago, we felt a need to better understand how the public sector in the US provides its citizens with basic services at a municipal level. This project studies the geographical coverage of public services in the city of Chicago, accounting for the inequality regarding some socioeconomic indicators among neighborhoods.
